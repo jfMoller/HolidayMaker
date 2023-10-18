@@ -13,21 +13,23 @@ import java.util.List;
 
 public class CustomersTest {
 
-    private static final String TEST_CUSTOMER_NAME = "TestCustomer keyboardcat-fwrwgwrgwg475226wbwr";
+    private static final String FIRST_NAME = "keyboardcat-fwrwgwrgwg475226wbwr";
+    private static final String LAST_NAME = "keyboardcat-gw87sgewwgwr8g";
+    private static final String PHONE_NUMBER = "keyboardcat-w9g7wrg5egw7eg";
+    private static final String PERSONAL_NUMBER = "keyboardcat-kwgeq6gw74w6";
+    private static final String EMAIL = "keyboardcat-fwrceq824t2fwbwr";
+    private static final String PASSPORT_NUMBER = "keyboardcat-flf2jwvnew4356wbwr";
 
     @BeforeEach
     public void connect() throws SQLException {
         ConnectionProvider.openConnection();
-        CustomerService customerService = new CustomerService();
-        Customer newCustomer = new Customer(TEST_CUSTOMER_NAME);
-        customerService.addCustomer(newCustomer);
+        createTestCustomer();
     }
 
     @AfterEach
     public void disconnect() throws SQLException {
         deleteTestCustomer();
         ConnectionProvider.closeConnection();
-        // Ta bort samma customer
     }
 
     @Test
@@ -37,18 +39,30 @@ public class CustomersTest {
 
         // When
         List<Customer> customers = customerService.getCustomers();
+        Customer lastCustomer = customers.get(customers.size() - 1);
 
         // Then
-        Customer lastCustomer = customers.get(customers.size() - 1);
-        Assertions.assertEquals(lastCustomer.getName(), TEST_CUSTOMER_NAME);
+        Assertions.assertEquals(FIRST_NAME, lastCustomer.getFirstName());
+        Assertions.assertEquals(LAST_NAME, lastCustomer.getLastName());
+        Assertions.assertEquals(PHONE_NUMBER, lastCustomer.getPhoneNumber());
+        Assertions.assertEquals(PERSONAL_NUMBER, lastCustomer.getPersonalNumber());
+        Assertions.assertEquals(EMAIL, lastCustomer.getEmail());
+        Assertions.assertEquals(PASSPORT_NUMBER, lastCustomer.getPassportNumber());
+    }
+
+    public void createTestCustomer() throws SQLException {
+        CustomerService customerService = new CustomerService();
+        Customer testCustomer =
+                new Customer(FIRST_NAME, LAST_NAME, PHONE_NUMBER, PERSONAL_NUMBER, EMAIL, PASSPORT_NUMBER);
+        customerService.addCustomer(testCustomer);
     }
 
     public void deleteTestCustomer() throws SQLException {
-        String sql = "DELETE FROM customers WHERE name = (?)";
+        String sql = "DELETE FROM customers WHERE personal_number = (?)";
 
         Connection connection = ConnectionProvider.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, TEST_CUSTOMER_NAME);
+        statement.setString(1, PERSONAL_NUMBER);
 
         statement.executeUpdate();
     }
