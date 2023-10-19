@@ -15,7 +15,7 @@ public class ActivityTest {
     private static int id;
     private static int price;
     private static int travel_package;
-    private static final List<String> type = new ArrayList<>(List.of("Drakflygning", "Fallskärmshoppning", "Klättring"));
+    private static final List<String> type = new ArrayList<>(List.of("Fallskärmshoppning", "Klättring", "Drakflygning"));
 
 
     @BeforeEach
@@ -38,10 +38,21 @@ public class ActivityTest {
         List<Activity> typeInList = activityService.getActivities();
 
         //Then
-        for(int i=0; i<3; i++) {
-            String activityInDatabase = activityInDatabase.get(i).getType();
-            String typeInList = type.get(i);
-            Assertions.assertEquals(typeInList, activityInDatabase);
+        List<Activity> activityInDatabase = typeInList;
+
+        for (int i = 0; i < type.size(); i++) {
+            String localType = type.get(i);
+            boolean containsType = false;
+
+            for (Activity activity : activityInDatabase) {
+                if (activity.getType().equals(localType)) {
+                    containsType = true;
+                    break;
+                }
+            }
+
+            Assertions.assertTrue(containsType);
         }
+
     }
 }

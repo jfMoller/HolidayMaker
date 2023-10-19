@@ -23,7 +23,7 @@ public class ActivityService {
 
     public List<Activity> getActivities() throws SQLException {
 
-        String sql = "SELECT * FROM activies";
+        String sql = "SELECT * FROM activities";
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
 
