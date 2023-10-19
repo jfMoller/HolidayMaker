@@ -33,7 +33,7 @@ public class CustomersTest {
     }
 
     @Test
-    public void testExistingCustomers() throws SQLException {
+    public void testLastCustomer() throws SQLException {
         // Given
         CustomerService customerService = new CustomerService();
 

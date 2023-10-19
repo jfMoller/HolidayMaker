@@ -74,6 +74,7 @@ public class CustomerService {
         String sql = "INSERT INTO customers (first_name, last_name, phone_number, personal_number, email, passport_number)" +
                 " VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
+
         statement.setString(1, newCustomer.getFirstName());
         statement.setString(2, newCustomer.getLastName());
         statement.setString(3, newCustomer.getPhoneNumber());
