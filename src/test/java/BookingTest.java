@@ -2,10 +2,13 @@ import com.holidaymaker.entity.Booking;
 import com.holidaymaker.service.BookingService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -77,6 +80,35 @@ public class BookingTest {
 
         //Then
         assertNull(foundBooking);
+    }
+
+    @Test
+    public void TestGetBookings() throws SQLException {
+
+        //Given
+        List<Booking> bookings = new ArrayList<>(List.of(new Booking(MAIN_CUSTOMER, DATE, IS_PAYED, TRAVEL_PACKAGE),
+                new Booking(MAIN_CUSTOMER, DATE, IS_PAYED, TRAVEL_PACKAGE),
+                new Booking(MAIN_CUSTOMER, DATE, IS_PAYED, TRAVEL_PACKAGE)));
+
+        BookingService bookingService = new BookingService();
+
+        //When
+        for (Booking booking : bookings ) {
+            bookingService.addBooking(booking);
+        }
+        List<Booking> fetchBookings = bookingService.getAllBookings();
+
+        //Then
+
+        for ( Booking createdBooking : bookings ) {
+
+            for (Booking fetchBooking : fetchBookings) {
+                assertEquals(createdBooking.getMainCustomer(), fetchBooking.getMainCustomer());
+                assertEquals(createdBooking.getDate(), fetchBooking.getDate());
+                assertEquals(createdBooking.getIsPayed(), fetchBooking.getIsPayed());
+                assertEquals(createdBooking.getTravelPackage(), fetchBooking.getTravelPackage());
+            }
+        }
     }
 
     public void clearMockBooking() throws SQLException {

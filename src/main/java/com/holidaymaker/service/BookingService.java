@@ -1,12 +1,15 @@
 package com.holidaymaker.service;
 
 import com.holidaymaker.entity.Booking;
+import com.holidaymaker.entity.Customer;
 import com.holidaymaker.utility.ConnectionProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookingService {
@@ -25,6 +28,21 @@ public class BookingService {
                 " VALUES (?, ?, ?, ?)";
         PreparedStatement statement = setBookingStatement(newBooking, sql);
         statement.executeUpdate();
+    }
+
+    public List<Booking> getAllBookings() throws SQLException {
+
+        String sql = "SELECT * FROM bookings";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Booking> bookings = new ArrayList<>();
+
+        while (resultSet.next()) {
+            bookings.add(new Booking(resultSet));
+        }
+
+        return bookings;
     }
 
     public Booking fetchLastBooking() throws SQLException {
@@ -62,6 +80,8 @@ public class BookingService {
             statement.executeUpdate();
         }
     }
+
+
 
     public PreparedStatement setBookingStatement(Booking booking, String sql) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
