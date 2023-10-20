@@ -1,0 +1,35 @@
+-------------------------------------------------------------------------------
+Test set: CustomersTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.006 s <<< FAILURE! - in CustomersTest
+CustomersTest.testLastCustomer  Time elapsed: 0.003 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class com.holidaymaker.utility.ConnectionProvider
+	at CustomersTest.connect(CustomersTest.java:25)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Suppressed: java.lang.NoClassDefFoundError: Could not initialize class com.holidaymaker.utility.ConnectionProvider
+		at CustomersTest.deleteTestCustomer(CustomersTest.java:63)
+		at CustomersTest.disconnect(CustomersTest.java:31)
+		... 3 more
+	Caused by: java.lang.ExceptionInInitializerError: Exception org.yaml.snakeyaml.error.YAMLException: java.io.IOException: Stream closed [in thread "main"]
+		at org.yaml.snakeyaml.reader.StreamReader.update(StreamReader.java:214)
+		at org.yaml.snakeyaml.reader.StreamReader.ensureEnoughData(StreamReader.java:172)
+		at org.yaml.snakeyaml.reader.StreamReader.ensureEnoughData(StreamReader.java:167)
+		at org.yaml.snakeyaml.reader.StreamReader.peek(StreamReader.java:122)
+		at org.yaml.snakeyaml.scanner.ScannerImpl.scanToNextToken(ScannerImpl.java:1204)
+		at org.yaml.snakeyaml.scanner.ScannerImpl.fetchMoreTokens(ScannerImpl.java:320)
+		at org.yaml.snakeyaml.scanner.ScannerImpl.checkToken(ScannerImpl.java:238)
+		at org.yaml.snakeyaml.parser.ParserImpl$ParseImplicitDocumentStart.produce(ParserImpl.java:212)
+		at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:162)
+		at org.yaml.snakeyaml.parser.ParserImpl.checkEvent(ParserImpl.java:152)
+		at org.yaml.snakeyaml.composer.Composer.getSingleNode(Composer.java:156)
+		at org.yaml.snakeyaml.constructor.BaseConstructor.getSingleData(BaseConstructor.java:178)
+		at org.yaml.snakeyaml.Yaml.loadFromReader(Yaml.java:493)
+		at org.yaml.snakeyaml.Yaml.load(Yaml.java:434)
+		at com.holidaymaker.utility.ConnectionProvider.getConnectionString(ConnectionProvider.java:36)
+		at com.holidaymaker.utility.ConnectionProvider.<clinit>(ConnectionProvider.java:14)
+		at ActivityTest.connect(ActivityTest.java:23)
+		... 3 more
+Caused by: [CIRCULAR REFERENCE: java.lang.ExceptionInInitializerError: Exception org.yaml.snakeyaml.error.YAMLException: java.io.IOException: Stream closed [in thread "main"]]
+

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="ActivityTest" time="0.143" tests="1" errors="1" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="20"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\School\Desktop\Test-O\HM\HolidayMaker\target\test-classes;C:\Users\School\Desktop\Test-O\HM\HolidayMaker\target\classes;C:\Users\School\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\School\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.0\junit-jupiter-5.10.0.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\School\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\School\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\School\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.0\junit-jupiter-params-5.10.0.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\School\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\School\.m2\repository\org\yaml\snakeyaml\2.0\snakeyaml-2.0.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Europe/Stockholm"/>
+    <property name="user.country.format" value="SE"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="java.vm.specification.version" value="20"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Users\School\.jdks\openjdk-20.0.2\bin"/>
+    <property name="sun.java.command" value="C:\Users\School\AppData\Local\Temp\surefire15750300728863549038\surefirebooter-20231020085351573_3.jar C:\Users\School\AppData\Local\Temp\surefire15750300728863549038 2023-10-20T08-53-51_340-jvmRun1 surefire-20231020085351573_1tmp surefire_0-20231020085351573_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\School\Desktop\Test-O\HM\HolidayMaker\target\test-classes;C:\Users\School\Desktop\Test-O\HM\HolidayMaker\target\classes;C:\Users\School\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\School\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.0\junit-jupiter-5.10.0.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\School\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\School\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\School\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.0\junit-jupiter-params-5.10.0.jar;C:\Users\School\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\School\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\School\.m2\repository\org\yaml\snakeyaml\2.0\snakeyaml-2.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\School"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2023-07-18"/>
+    <property name="java.home" value="C:\Users\School\.jdks\openjdk-20.0.2"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\School\Desktop\Test-O\HM\HolidayMaker"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\School\AppData\Local\Temp\surefire15750300728863549038\surefirebooter-20231020085351573_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="20.0.2+9-78"/>
+    <property name="user.name" value="School"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\School\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\School\AppData\Local\Temp\"/>
+    <property name="idea.version" value="2023.2.1"/>
+    <property name="java.version" value="20.0.2"/>
+    <property name="user.dir" value="C:\Users\School\Desktop\Test-O\HM\HolidayMaker"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.language.format" value="sv"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Users\School\.jdks\openjdk-20.0.2\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Python311\Scripts\;C:\Python311\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;;C:\Program Files\Docker\Docker\resources\bin;C:\Users\School\AppData\Local\Microsoft\WindowsApps;C:\Users\School\AppData\Roaming\npm;C:\Users\School\AppData\Local\Programs\Microsoft VS Code\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="20.0.2+9-78"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="64.0"/>
+  </properties>
+  <testcase name="testActivityClass" classname="ActivityTest" time="0.11">
+    <error type="java.lang.ExceptionInInitializerError"><![CDATA[java.lang.ExceptionInInitializerError
+	at ActivityTest.connect(ActivityTest.java:23)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Suppressed: java.lang.NoClassDefFoundError: Could not initialize class com.holidaymaker.utility.ConnectionProvider
+		at ActivityTest.disconnect(ActivityTest.java:28)
+		... 3 more
+	Caused by: java.lang.ExceptionInInitializerError: Exception org.yaml.snakeyaml.error.YAMLException: java.io.IOException: Stream closed [in thread "main"]
+		at org.yaml.snakeyaml.reader.StreamReader.update(StreamReader.java:214)
+		at org.yaml.snakeyaml.reader.StreamReader.ensureEnoughData(StreamReader.java:172)
+		at org.yaml.snakeyaml.reader.StreamReader.ensureEnoughData(StreamReader.java:167)
+		at org.yaml.snakeyaml.reader.StreamReader.peek(StreamReader.java:122)
+		at org.yaml.snakeyaml.scanner.ScannerImpl.scanToNextToken(ScannerImpl.java:1204)
+		at org.yaml.snakeyaml.scanner.ScannerImpl.fetchMoreTokens(ScannerImpl.java:320)
+		at org.yaml.snakeyaml.scanner.ScannerImpl.checkToken(ScannerImpl.java:238)
+		at org.yaml.snakeyaml.parser.ParserImpl$ParseImplicitDocumentStart.produce(ParserImpl.java:212)
+		at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:162)
+		at org.yaml.snakeyaml.parser.ParserImpl.checkEvent(ParserImpl.java:152)
+		at org.yaml.snakeyaml.composer.Composer.getSingleNode(Composer.java:156)
+		at org.yaml.snakeyaml.constructor.BaseConstructor.getSingleData(BaseConstructor.java:178)
+		at org.yaml.snakeyaml.Yaml.loadFromReader(Yaml.java:493)
+		at org.yaml.snakeyaml.Yaml.load(Yaml.java:434)
+		at com.holidaymaker.utility.ConnectionProvider.getConnectionString(ConnectionProvider.java:36)
+		at com.holidaymaker.utility.ConnectionProvider.<clinit>(ConnectionProvider.java:14)
+		at ActivityTest.connect(ActivityTest.java:23)
+		... 3 more
+Caused by: org.yaml.snakeyaml.error.YAMLException: java.io.IOException: Stream closed
+	at org.yaml.snakeyaml.reader.StreamReader.update(StreamReader.java:214)
+	at org.yaml.snakeyaml.reader.StreamReader.ensureEnoughData(StreamReader.java:172)
+	at org.yaml.snakeyaml.reader.StreamReader.ensureEnoughData(StreamReader.java:167)
+	at org.yaml.snakeyaml.reader.StreamReader.peek(StreamReader.java:122)
+	at org.yaml.snakeyaml.scanner.ScannerImpl.scanToNextToken(ScannerImpl.java:1204)
+	at org.yaml.snakeyaml.scanner.ScannerImpl.fetchMoreTokens(ScannerImpl.java:320)
+	at org.yaml.snakeyaml.scanner.ScannerImpl.checkToken(ScannerImpl.java:238)
+	at org.yaml.snakeyaml.parser.ParserImpl$ParseImplicitDocumentStart.produce(ParserImpl.java:212)
+	at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:162)
+	at org.yaml.snakeyaml.parser.ParserImpl.checkEvent(ParserImpl.java:152)
+	at org.yaml.snakeyaml.composer.Composer.getSingleNode(Composer.java:156)
+	at org.yaml.snakeyaml.constructor.BaseConstructor.getSingleData(BaseConstructor.java:178)
+	at org.yaml.snakeyaml.Yaml.loadFromReader(Yaml.java:493)
+	at org.yaml.snakeyaml.Yaml.load(Yaml.java:434)
+	at com.holidaymaker.utility.ConnectionProvider.getConnectionString(ConnectionProvider.java:36)
+	at com.holidaymaker.utility.ConnectionProvider.<clinit>(ConnectionProvider.java:14)
+	... 4 more
+Caused by: java.io.IOException: Stream closed
+	at java.base/java.io.PushbackInputStream.ensureOpen(PushbackInputStream.java:82)
+	at java.base/java.io.PushbackInputStream.read(PushbackInputStream.java:177)
+	at org.yaml.snakeyaml.reader.UnicodeReader.init(UnicodeReader.java:85)
+	at org.yaml.snakeyaml.reader.UnicodeReader.read(UnicodeReader.java:117)
+	at org.yaml.snakeyaml.reader.StreamReader.update(StreamReader.java:179)
+	... 19 more
+]]></error>
+  </testcase>
+</testsuite>
