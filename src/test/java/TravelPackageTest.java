@@ -60,7 +60,7 @@ public class TravelPackageTest {
         Assertions.assertEquals(STARTDATE, lastTravelPackage.getStartDate());
         Assertions.assertEquals(ENDDATE, lastTravelPackage.getEndDate());
 
-     //   deleteTravelPackageById(id);
+        deleteTravelPackageById(id);
     }
 
     public void deleteTravelPackageById(int index) throws SQLException {
@@ -80,7 +80,7 @@ public class TravelPackageTest {
     public void showTravelPackages(){
         //Given
         //When
-        //THen
+        //Then
     }
 
     public void createTravelPackage() throws SQLException {

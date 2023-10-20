@@ -61,4 +61,16 @@ public class TravelPackageService {
 
     }
 
+    //Påbörjad metod för att kunna skräddarsy resor men används inte just nu.
+/*
+
+    public void addTravelPackageFromMenu() throws SQLException {
+        System.out.println("Type of theme 1: Sport 2: Culture 3: Nature");
+        int theme = scanner.nextInt();
+
+        System.out.println("Destination");
+    }
+
+
+ */
 }
