@@ -45,6 +45,13 @@ public class BookingService {
         return bookings;
     }
 
+    public void viewBookings() throws SQLException {
+        List<Booking> bookings = getAllBookings();
+        for (Booking booking : bookings) {
+            System.out.println(booking);
+        }
+    }
+
     public Booking fetchLastBooking() throws SQLException {
         String sql = "SELECT * FROM bookings ORDER BY id DESC LIMIT 1;";
         PreparedStatement statement = connection.prepareStatement(sql);
