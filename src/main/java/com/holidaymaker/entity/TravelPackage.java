@@ -15,7 +15,6 @@ public class TravelPackage {
     private String endDate;
 
     public TravelPackage(int price, int theme, String destination, int availableSpots, String startDate, String endDate) {
-       // this.id = 290000000;
         this.price = price;
         this.theme = theme;
         this.destination = destination;

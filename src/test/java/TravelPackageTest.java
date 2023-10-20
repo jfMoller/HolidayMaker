@@ -1,6 +1,4 @@
 import com.holidaymaker.entity.TravelPackage;
-import com.holidaymaker.service.ActivityService;
-import com.holidaymaker.service.ThemeService;
 import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
@@ -11,9 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class TravelPackageTest {
@@ -22,9 +17,9 @@ public class TravelPackageTest {
     private static final int PRICE = 10000;
     private static int theme = 1;
     private static final String DESTINATION = "Planet Mars";
-    private static final int AVAILIBLESPOTS = 12;
-    private static final String STARTDATE = "2023-12-01 00:00:00";
-    private static final String ENDDATE = "2024-01-05 00:00:30";
+    private static final int AVAILABLE_SPOTS = 12;
+    private static final String START_DATE = "2023-12-01 00:00:00";
+    private static final String END_DATE = "2024-01-05 00:00:30";
 
 
     @BeforeEach
@@ -38,7 +33,6 @@ public class TravelPackageTest {
     }
 
 
-    //Se om travel package sparas i databasen
     @Test
     public void isPackageSavedInDB() throws SQLException {
 
@@ -56,9 +50,9 @@ public class TravelPackageTest {
         Assertions.assertEquals(PRICE, lastTravelPackage.getPrice());
         Assertions.assertEquals(theme, lastTravelPackage.getTheme());
         Assertions.assertEquals(DESTINATION, lastTravelPackage.getDestination());
-        Assertions.assertEquals(AVAILIBLESPOTS, lastTravelPackage.getAvailableSpots());
-        Assertions.assertEquals(STARTDATE, lastTravelPackage.getStartDate());
-        Assertions.assertEquals(ENDDATE, lastTravelPackage.getEndDate());
+        Assertions.assertEquals(AVAILABLE_SPOTS, lastTravelPackage.getAvailableSpots());
+        Assertions.assertEquals(START_DATE, lastTravelPackage.getStartDate());
+        Assertions.assertEquals(END_DATE, lastTravelPackage.getEndDate());
 
         deleteTravelPackageById(id);
     }
@@ -73,19 +67,9 @@ public class TravelPackageTest {
         statement.executeUpdate();
     }
 
-
-    // Om travel package kan visas från databasen
-
-    @Test
-    public void showTravelPackages(){
-        //Given
-        //When
-        //Then
-    }
-
     public void createTravelPackage() throws SQLException {
         TravelPackageService travelPackageService = new TravelPackageService();
-        TravelPackage travelPackage = new TravelPackage(PRICE, theme, DESTINATION, AVAILIBLESPOTS, STARTDATE, ENDDATE);
+        TravelPackage travelPackage = new TravelPackage(PRICE, theme, DESTINATION, AVAILABLE_SPOTS, START_DATE, END_DATE);
         travelPackageService.addTravelPackage(travelPackage);
     }
 
