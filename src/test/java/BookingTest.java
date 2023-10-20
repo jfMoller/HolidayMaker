@@ -27,7 +27,7 @@ public class BookingTest {
     }
 
     @Test
-    public void testCreateBooking() {
+    public void testCreateBooking() throws SQLException {
 
         //Given
         Booking booking = new Booking(main_customer, date, isPayed, travel_package);

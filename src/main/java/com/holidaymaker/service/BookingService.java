@@ -1,15 +1,12 @@
 package com.holidaymaker.service;
 
 import com.holidaymaker.entity.Booking;
-import com.holidaymaker.entity.Customer;
 import com.holidaymaker.utility.ConnectionProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class BookingService {
@@ -23,6 +20,13 @@ public class BookingService {
         this.scanner = new Scanner(System.in);
     }
 
+    public void addBooking(Booking newBooking) throws SQLException {
+        String sql = "INSERT INTO bookings (main_customer, date, isPayed, travel_package)" +
+                " VALUES (?, ?, ?, ?)";
+        PreparedStatement statement = setBookingStatement(newBooking, sql);
+        statement.executeUpdate();
+    }
+
     public Booking fetchLastBooking() throws SQLException {
 
         String sql = "SELECT * FROM bookings ORDER BY id DESC LIMIT 1;";
@@ -30,21 +34,22 @@ public class BookingService {
         ResultSet resultSet = statement.executeQuery();
 
 
-       if (resultSet.next()) {
+        if (resultSet.next()) {
             return new Booking(resultSet);
         }
         return null;
     }
 
     public Booking findBooking(Booking booking) throws SQLException {
-        String sql = "SELECT * FROM bookings WHERE   (main_customer, date, isPayed, travel_package)" +
-                " VALUES (?, ?, ?, ?)";
+        String sql = "SELECT * FROM bookings " +
+                "WHERE main_customer = (?) AND date = (?) AND isPayed =(?) AND travel_package = (?)";
+
         PreparedStatement statement = connection.prepareStatement(sql);
 
-        statement.setInt(1, booking.getMain_customer());
+        statement.setInt(1, booking.getMainCustomer());
         statement.setString(2, booking.getDate());
         statement.setBoolean(3, booking.getIsPayed());
-        statement.setInt(4, booking.getTravel_package());
+        statement.setInt(4, booking.getTravelPackage());
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -54,30 +59,34 @@ public class BookingService {
         return null;
     }
 
-    // Adds a customer to the database through the menu
-    public void addMenuCustomer() throws SQLException {
-        System.out.println("Enter first name:");
-        String firstName = scanner.nextLine();
+    public void deleteBooking(Booking booking) throws SQLException {
+        if (findBooking(booking) != null) {
 
-        System.out.println("Enter last name:");
-        String lastName = scanner.nextLine();
+            String sql = "DELETE FROM bookings " +
+                    "WHERE main_customer = (?) AND date = (?) AND isPayed =(?) AND travel_package = (?)";
 
-        System.out.println("Enter phone number:");
-        String phoneNumber = scanner.nextLine();
+            PreparedStatement statement = connection.prepareStatement(sql);
 
-        System.out.println("Enter personal number:");
-        String personalNumber = scanner.nextLine();
+            statement.setInt(1, booking.getMainCustomer());
+            statement.setString(2, booking.getDate());
+            statement.setBoolean(3, booking.getIsPayed());
+            statement.setInt(4, booking.getTravelPackage());
 
-        System.out.println("Enter email:");
-        String email = scanner.nextLine();
-
-        System.out.println("Enter passport number:");
-        String passportNumber = scanner.nextLine();
-
-        Customer newCustomer = new Customer(
-                firstName, lastName, phoneNumber, personalNumber, email, passportNumber);
-        addCustomer(newCustomer);
+            statement.executeUpdate();
+        }
     }
+
+    public PreparedStatement setBookingStatement(Booking newBooking, String sql) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, newBooking.getMainCustomer());
+        statement.setString(2, newBooking.getDate());
+        statement.setBoolean(3, newBooking.getIsPayed());
+        statement.setInt(4, newBooking.getTravelPackage());
+
+        return statement;
+    }
+
 
     // Adds a customer to the database
 

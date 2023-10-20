@@ -6,74 +6,54 @@ import java.sql.SQLException;
 public class Booking {
 
     private int id;
-    private int main_customer;
+    private int mainCustomer;
     private String date;
     private boolean isPayed;
-    private int travel_package;
+    private int travelPackage;
 
-    public Booking(int main_customer, String date, boolean isPayed, int travel_package) {
-        this.main_customer = main_customer;
+    public Booking(int mainCustomer, String date, boolean isPayed, int travelPackage) {
+        this.mainCustomer = mainCustomer;
         this.date = date;
         this.isPayed = isPayed;
-        this.travel_package = travel_package;
+        this.travelPackage = travelPackage;
     }
 
     public Booking(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getInt("id");
-        this.main_customer = resultSet.getInt("main_customer");
+        this.mainCustomer = resultSet.getInt("main_customer");
         this.date = resultSet.getString("date");
         this.isPayed = resultSet.getBoolean("isPayed");
-        this.travel_package = resultSet.getInt("travel_package");
+        this.travelPackage = resultSet.getInt("travel_package");
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getMain_customer() {
-        return main_customer;
-    }
-
-    public void setMain_customer(int main_customer) {
-        this.main_customer = main_customer;
+    public int getMainCustomer() {
+        return mainCustomer;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public boolean getIsPayed() {
         return isPayed;
     }
 
-    public void setIsPayed(boolean payed) {
-        isPayed = payed;
-    }
-
-    public int getTravel_package() {
-        return travel_package;
-    }
-
-    public void setTravel_package(int travel_package) {
-        this.travel_package = travel_package;
+    public int getTravelPackage() {
+        return travelPackage;
     }
 
     @Override
     public String toString() {
         return "Booking{" +
                 "id=" + id +
-                ", main_customer=" + main_customer +
+                ", mainCustomer=" + mainCustomer +
                 ", date='" + date + '\'' +
                 ", isPayed=" + isPayed +
-                ", travel_package=" + travel_package +
+                ", travelPackage=" + travelPackage +
                 '}';
     }
 }
