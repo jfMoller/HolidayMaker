@@ -9,51 +9,64 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccomodationsTest {
 
-    private static final int ID = 1;
+    private static int id;
+    private static final List<String> requiredTypes = new ArrayList<>(List.of("Hotel", "Hostal", "Cottage"));
 
-    private static final String TYPE = "Keyboard-qinfioqioqnf";
-
-    private static final String PRICE = "Keyboard-daiamipaf";
-
-    private static final String PEOPLE_HOUSED = "Keyboard-asdasdin";
-
-    private static final int TRAVEL_PACKAGE = 1;
 
     @BeforeEach
     public void connect() throws SQLException {
         ConnectionProvider.openConnection();
-        /*createTestAccomodation();*/
+        //createTestAccomodation();
     }
 
     @AfterEach
     public void disconnect() throws SQLException {
-        /*deleteTestAccomodation();*/
+        //deleteTestAccomodation();
         ConnectionProvider.closeConnection();
     }
 
     @Test
-    public void testAccomodationClass() throws SQLException {
+    public void testAccomodationClass() {
 
         //GIVEN
-        /*AccomodationService accomodationService = new AccomodationService();*/
-        Accomodation accomodation = new Accomodation(TYPE,PRICE,PEOPLE_HOUSED,TRAVEL_PACKAGE);
+        Accomodation accomodation = new Accomodation(-1, 4);
 
         //WHEN
-       /* List<Accomodation> accomodationList = accomodationService.getAccomodation();
-        Accomodation lastAccomodation = accomodations.get(accomodations.size() - 1);*/
+        List<String> typesInClass = accomodation.getAllTypes();
 
 
         //THEN
-        Assertions.assertEquals(TYPE, accomodation.getType());
-        Assertions.assertEquals(PRICE, accomodation.getPrice());
-        Assertions.assertEquals(PEOPLE_HOUSED, accomodation.getPeopleHoused());
-        Assertions.assertEquals(TRAVEL_PACKAGE, accomodation.getTravelPackage());
+        for(int i=0; i<3; i++) {
+            String requiredType = requiredTypes.get(i);
+            String typeInClass = typesInClass.get(i);
+            boolean bedsNotZero = accomodation.getNumberOfBeds() > 0;
+            boolean priceNotZero = accomodation.getPrice() >= 0;
+
+            Assertions.assertEquals(requiredType, typeInClass);
+            Assertions.assertTrue(bedsNotZero);
+            Assertions.assertTrue(priceNotZero);
+        }
+
     }
 
+    @Test
+    public void testAccomodationDb throw SQLException {
+        //GIVEN
+
+        //WHEN
+
+        //THEN
+
+    }
+
+
+
+/*
     public void createTestAccomodation() throws SQLException {
         AccomodationService accomodationService = new AccomodationService();
         Accomodation testAccomodation =
@@ -70,7 +83,7 @@ public class AccomodationsTest {
 
         statement.executeUpdate();
     }
-
+*/
 
 }
 
