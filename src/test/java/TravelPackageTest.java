@@ -1,5 +1,7 @@
+import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.service.ActivityService;
 import com.holidaymaker.service.ThemeService;
+import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -17,12 +19,12 @@ import java.util.List;
 public class TravelPackageTest {
     private static int id;
 
-    private static final double PRICE = 10000;
+    private static final int PRICE = 10000;
     private static int theme = 1;
     private static final String DESTINATION = "Planet Mars";
     private static final int AVAILIBLESPOTS = 12;
-    private static final Date STARTDATE = new Date(2023, 11, 10);
-    private static final Date ENDDATE = new Date(2024, 0, 5);
+    private static final String STARTDATE = "2023-12-01 00:00:00";
+    private static final String ENDDATE = "2024-01-05 00:00:30";
 
 
     @BeforeEach
@@ -41,7 +43,7 @@ public class TravelPackageTest {
     public void isPackageSavedInDB() throws SQLException {
 
         //Given
-        TravelPackageService travelPackageService = new TravelPackageService;
+        TravelPackageService travelPackageService = new TravelPackageService();
         createTravelPackage();
 
         //When
@@ -54,11 +56,11 @@ public class TravelPackageTest {
         Assertions.assertEquals(PRICE, lastTravelPackage.getPrice());
         Assertions.assertEquals(theme, lastTravelPackage.getTheme());
         Assertions.assertEquals(DESTINATION, lastTravelPackage.getDestination());
-        Assertions.assertEquals(AVAILIBLESPOTS, lastTravelPackage.getAvailibleSpots());
+        Assertions.assertEquals(AVAILIBLESPOTS, lastTravelPackage.getAvailableSpots());
         Assertions.assertEquals(STARTDATE, lastTravelPackage.getStartDate());
         Assertions.assertEquals(ENDDATE, lastTravelPackage.getEndDate());
 
-        deleteTravelPackageById(id);
+     //   deleteTravelPackageById(id);
     }
 
     public void deleteTravelPackageById(int index) throws SQLException {

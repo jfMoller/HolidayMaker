@@ -7,15 +7,15 @@ import java.util.Date;
 public class TravelPackage {
 
     private int id;
-    private double price;
+    private int price;
     private int theme;
     private  String destination;
     private int availableSpots;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
 
-    public TravelPackage(int id, double price, int theme, String destination, int availableSpots, Date startDate, Date endDate) {
-        this.id = id;
+    public TravelPackage(int price, int theme, String destination, int availableSpots, String startDate, String endDate) {
+       // this.id = 290000000;
         this.price = price;
         this.theme = theme;
         this.destination = destination;
@@ -26,13 +26,14 @@ public class TravelPackage {
 
     public TravelPackage(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getInt("id");
-        this.price = resultSet.getInt("price");
+        this.price = resultSet.getInt("total_price");
         this.theme = resultSet.getInt("theme");
         this.destination = resultSet.getString("destination");
         this.availableSpots = resultSet.getInt("available_spots");
-        this.startDate = resultSet.getDate("start_date");
-        this.endDate = resultSet.getDate("end_date");
+        this.startDate = resultSet.getString("start_date");
+        this.endDate = resultSet.getString("end_date");
     }
+
 
     public int getId() {
         return id;
@@ -42,11 +43,11 @@ public class TravelPackage {
         this.id = id;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -74,19 +75,19 @@ public class TravelPackage {
         this.availableSpots = availableSpots;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
