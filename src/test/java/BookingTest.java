@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class BookingTest {
 
     private static final int MAIN_CUSTOMER = 1;
-    private static final String DATE = "1890-03-03 00:00:00";
+    private static final String DATE = "1890-03-03 14:02:01";
     private static final boolean IS_PAYED = false;
     private static final int TRAVEL_PACKAGE = 1;
 

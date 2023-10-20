@@ -74,8 +74,4 @@ public class BookingService {
         return statement;
     }
 
-
-    // Adds a customer to the database
-
-
 }
