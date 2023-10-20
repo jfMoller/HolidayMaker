@@ -26,14 +26,14 @@ public class BookingTest {
     }
 
     @Test
-    public void createBooking() {
+    public void testCreateBooking() {
 
         //Given
         Booking booking = new Booking(main_customer, date, isPayed, travel_package);
         BookingService bookingService = new BookingService();
 
         //When
-        boookingService.addBooking(booking);
+        bookingService.addBooking(booking);
         Booking latestBooking = bookingService.fetchLastBooking();
 
         //Then
@@ -42,5 +42,28 @@ public class BookingTest {
         Assertions.assertEquals(booking.getIsPayed(), latestBooking.getIsPayed());
         Assertions.assertEquals(booking.getTravel_package(), latestBooking.getTravel_package());
 
+    }
+
+    @Test
+    public void testDeleteBooking() {
+
+        //Given
+        Booking createdBooking =  createAndGetBooking();
+
+        //When
+        bookingService.deleteBooking(createdBooking);
+        Booking foundBooking = bookingService.findBooking(createdBooking);
+
+        //Then
+        assertTrue(foundBooking == null);
+        assertTrue(createdBooking == null);
+    }
+
+    public Booking createAndGetBooking() {
+        Booking booking = new Booking(main_customer, date, isPayed, travel_package);
+        BookingService bookingService = new BookingService();
+        bookingService.addBooking(booking);
+        Booking latestBooking = bookingService.fetchLastBooking();
+        return latestBooking;
     }
 }
