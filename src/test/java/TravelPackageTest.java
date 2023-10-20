@@ -1,9 +1,13 @@
+import com.holidaymaker.service.ActivityService;
 import com.holidaymaker.service.ThemeService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,13 +15,14 @@ import java.util.Date;
 import java.util.List;
 
 public class TravelPackageTest {
+    private static int id;
 
-    private static double price = 10000;
+    private static final double PRICE = 10000;
     private static int theme = 1;
-    private static String destination = "Planet Mars";
-    private static int availableSpots = 12;
-    private static Date startDate = new Date(2023, 11, 10);
-    private static Date endDate = new Date(2024, 0, 5);
+    private static final String DESTINATION = "Planet Mars";
+    private static final int AVAILIBLESPOTS = 12;
+    private static final Date STARTDATE = new Date(2023, 11, 10);
+    private static final Date ENDDATE = new Date(2024, 0, 5);
 
 
     @BeforeEach
@@ -33,18 +38,37 @@ public class TravelPackageTest {
 
     //Se om travel package sparas i databasen
     @Test
-    public void isPackageSavedInDB() {
+    public void isPackageSavedInDB() throws SQLException {
 
         //Given
         TravelPackageService travelPackageService = new TravelPackageService;
-
+        createTravelPackage();
 
         //When
-        TravelPackage travelPackage = new TravelPackage(price, theme, destination, availableSpots, startDate, endDate);
-        travelPackageService.addTravelPackage();
+        List<TravelPackage> travelPackages = travelPackageService.getTravelPackage();
+        TravelPackage lastTravelPackage = travelPackages.get(travelPackages.size() -1);
+        id = lastTravelPackage.getId();
 
         //Then
-        List<Package> packages = travelPackageService.getTravelPackages();
+        Assertions.assertEquals(id, lastTravelPackage.getId());
+        Assertions.assertEquals(PRICE, lastTravelPackage.getPrice());
+        Assertions.assertEquals(theme, lastTravelPackage.getTheme());
+        Assertions.assertEquals(DESTINATION, lastTravelPackage.getDestination());
+        Assertions.assertEquals(AVAILIBLESPOTS, lastTravelPackage.getAvailibleSpots());
+        Assertions.assertEquals(STARTDATE, lastTravelPackage.getStartDate());
+        Assertions.assertEquals(ENDDATE, lastTravelPackage.getEndDate());
+
+        deleteTravelPackageById(id);
+    }
+
+    public void deleteTravelPackageById(int index) throws SQLException {
+        String sql = "DELETE FROM travel_packages WHERE id = (?)";
+
+        Connection connection = ConnectionProvider.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, index);
+
+        statement.executeUpdate();
     }
 
 
@@ -55,6 +79,12 @@ public class TravelPackageTest {
         //Given
         //When
         //THen
+    }
+
+    public void createTravelPackage() throws SQLException {
+        TravelPackageService travelPackageService = new TravelPackageService();
+        TravelPackage travelPackage = new TravelPackage(PRICE, theme, DESTINATION, AVAILIBLESPOTS, STARTDATE, ENDDATE);
+        travelPackageService.addTravelPackage(travelPackage);
     }
 
 }
