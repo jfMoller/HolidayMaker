@@ -28,11 +28,9 @@ public class BookingService {
     }
 
     public Booking fetchLastBooking() throws SQLException {
-
         String sql = "SELECT * FROM bookings ORDER BY id DESC LIMIT 1;";
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
-
 
         if (resultSet.next()) {
             return new Booking(resultSet);
@@ -44,12 +42,7 @@ public class BookingService {
         String sql = "SELECT * FROM bookings " +
                 "WHERE main_customer = (?) AND date = (?) AND isPayed =(?) AND travel_package = (?)";
 
-        PreparedStatement statement = connection.prepareStatement(sql);
-
-        statement.setInt(1, booking.getMainCustomer());
-        statement.setString(2, booking.getDate());
-        statement.setBoolean(3, booking.getIsPayed());
-        statement.setInt(4, booking.getTravelPackage());
+        PreparedStatement statement = setBookingStatement(booking, sql);
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -61,28 +54,22 @@ public class BookingService {
 
     public void deleteBooking(Booking booking) throws SQLException {
         if (findBooking(booking) != null) {
-
             String sql = "DELETE FROM bookings " +
                     "WHERE main_customer = (?) AND date = (?) AND isPayed =(?) AND travel_package = (?)";
 
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setInt(1, booking.getMainCustomer());
-            statement.setString(2, booking.getDate());
-            statement.setBoolean(3, booking.getIsPayed());
-            statement.setInt(4, booking.getTravelPackage());
+            PreparedStatement statement = setBookingStatement(booking, sql);
 
             statement.executeUpdate();
         }
     }
 
-    public PreparedStatement setBookingStatement(Booking newBooking, String sql) throws SQLException {
+    public PreparedStatement setBookingStatement(Booking booking, String sql) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
 
-        statement.setInt(1, newBooking.getMainCustomer());
-        statement.setString(2, newBooking.getDate());
-        statement.setBoolean(3, newBooking.getIsPayed());
-        statement.setInt(4, newBooking.getTravelPackage());
+        statement.setInt(1, booking.getMainCustomer());
+        statement.setString(2, booking.getDate());
+        statement.setBoolean(3, booking.getIsPayed());
+        statement.setInt(4, booking.getTravelPackage());
 
         return statement;
     }

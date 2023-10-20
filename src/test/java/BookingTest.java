@@ -2,18 +2,20 @@ import com.holidaymaker.entity.Booking;
 import com.holidaymaker.service.BookingService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 public class BookingTest {
 
-    private static final int main_customer = 1;
-    private static final String date = "1890-03-03";
-    private static final boolean isPayed = false;
-    private static final int travel_package = 1;
+    private static final int MAIN_CUSTOMER = 1;
+    private static final String DATE = "1890-03-03 00:00:00";
+    private static final boolean IS_PAYED = false;
+    private static final int TRAVEL_PACKAGE = 1;
 
     @BeforeEach
     public void connect() throws SQLException {
@@ -30,7 +32,7 @@ public class BookingTest {
     public void testCreateBooking() throws SQLException {
 
         //Given
-        Booking booking = new Booking(main_customer, date, isPayed, travel_package);
+        Booking booking = new Booking(MAIN_CUSTOMER, DATE, IS_PAYED, TRAVEL_PACKAGE);
         BookingService bookingService = new BookingService();
 
         //When
@@ -38,61 +40,63 @@ public class BookingTest {
         Booking latestBooking = bookingService.fetchLastBooking();
 
         //Then
-        Assertions.assertEquals(booking.getMainCustomer(), latestBooking.getMainCustomer());
-        Assertions.assertEquals(booking.getDate(), latestBooking.getDate());
-        Assertions.assertEquals(booking.getIsPayed(), latestBooking.getIsPayed());
-        Assertions.assertEquals(booking.getTravel_package(), latestBooking.getTravel_package());
+        assertEquals(booking.getMainCustomer(), latestBooking.getMainCustomer());
+        assertEquals(booking.getDate(), latestBooking.getDate());
+        assertEquals(booking.getIsPayed(), latestBooking.getIsPayed());
+        assertEquals(booking.getTravelPackage(), latestBooking.getTravelPackage());
 
     }
 
     @Test
-    public void testFindBooking() {
+    public void testFindBooking() throws SQLException {
 
         //Given
-        Booking createdBooking =  createAndGetBooking();
+        Booking createdBooking = createAndGetBooking();
+        BookingService bookingService = new BookingService();
 
         //When
         Booking foundBooking = bookingService.findBooking(createdBooking);
 
         //Then
-        Assertions.assertEquals(createdBooking.getMainCustomer(), foundBooking.getMainCustomer());
-        Assertions.assertEquals(createdBooking.getDate(), foundBooking.getDate());
-        Assertions.assertEquals(createdBooking.getIsPayed(), foundBooking.getIsPayed());
-        Assertions.assertEquals(createdBooking.getTravel_package(), foundBooking.getTravel_package());
+        assertEquals(createdBooking.getMainCustomer(), foundBooking.getMainCustomer());
+        assertEquals(createdBooking.getDate(), foundBooking.getDate());
+        assertEquals(createdBooking.getIsPayed(), foundBooking.getIsPayed());
+        assertEquals(createdBooking.getTravelPackage(), foundBooking.getTravelPackage());
     }
 
     @Test
-    public void testDeleteBooking() {
+    public void testDeleteBooking() throws SQLException {
 
         //Given
-        Booking createdBooking =  createAndGetBooking();
+        Booking createdBooking = createAndGetBooking();
+        BookingService bookingService = new BookingService();
 
         //When
         bookingService.deleteBooking(createdBooking);
         Booking foundBooking = bookingService.findBooking(createdBooking);
 
         //Then
-        assertTrue(foundBooking == null);
-        assertTrue(createdBooking == null);
+        assertNull(foundBooking);
     }
 
-    public void clearMockBooking() {
+    public void clearMockBooking() throws SQLException {
 
-        Booking booking = new Booking(main_customer, date, isPayed, travel_package);
-        Booking foundBooking = bookingService.findBooking(createdBooking);
+        Booking booking = new Booking(MAIN_CUSTOMER, DATE, IS_PAYED, TRAVEL_PACKAGE);
+        BookingService bookingService = new BookingService();
+        Booking foundBooking = bookingService.findBooking(booking);
 
-        if(foundBooking != null) {
+        if (foundBooking != null) {
             bookingService.deleteBooking(foundBooking);
         }
     }
 
 
-    public Booking createAndGetBooking() {
+    public Booking createAndGetBooking() throws SQLException {
 
-        Booking booking = new Booking(main_customer, date, isPayed, travel_package);
+        Booking booking = new Booking(MAIN_CUSTOMER, DATE, IS_PAYED, TRAVEL_PACKAGE);
         BookingService bookingService = new BookingService();
         bookingService.addBooking(booking);
-        Booking latestBooking = bookingService.fetchLastBooking();
-        return latestBooking;
+
+        return bookingService.fetchLastBooking();
     }
 }
