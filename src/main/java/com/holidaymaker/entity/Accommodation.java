@@ -5,18 +5,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Accomodation {
+public class Accommodation {
 
     private int id;
-    private static final List<String> types = new ArrayList<>(List.of("Hotel", "Hostal", "Cottage"));
+    private static final List<String> types = new ArrayList<>(List.of("Hotel", "Hostel", "Cottage"));
     private double price;
     private int numberOfBeds;
     private int travelPackage;
     private String type;
 
-    public Accomodation( double price, int numberOfBeds) {
+    public Accommodation( double price, int numberOfBeds) {
         this.price = price;
         this.numberOfBeds = numberOfBeds;
+    }
+
+    public Accommodation(ResultSet resultSet) throws SQLException {
+        this.id = resultSet.getInt("id");
+        this.type = resultSet.getString("type");
     }
 
 
