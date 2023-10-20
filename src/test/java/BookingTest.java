@@ -1,3 +1,4 @@
+import com.holidaymaker.entity.Booking;
 import com.holidaymaker.service.BookingService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
@@ -5,15 +6,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.print.Book;
 import java.sql.SQLException;
 
 public class BookingTest {
 
-    private static int main_customer;
-    private static String date;
-    private static boolean isPayed;
-    private static int travel_package;
+    private static final int main_customer = 1;
+    private static final String date = "1890-03-03";
+    private static final boolean isPayed = false;
+    private static final int travel_package = 1;
 
     @BeforeEach
     public void connect() throws SQLException {
@@ -22,6 +22,7 @@ public class BookingTest {
 
     @AfterEach
     public void disconnect() throws SQLException {
+        clearMockBooking();
         ConnectionProvider.closeConnection();
     }
 
@@ -45,6 +46,22 @@ public class BookingTest {
     }
 
     @Test
+    public void testFindBooking() {
+
+        //Given
+        Booking createdBooking =  createAndGetBooking();
+
+        //When
+        Booking foundBooking = bookingService.findBooking(createdBooking);
+
+        //Then
+        Assertions.assertEquals(createdBooking.getMainCustomer(), foundBooking.getMainCustomer());
+        Assertions.assertEquals(createdBooking.getDate(), foundBooking.getDate());
+        Assertions.assertEquals(createdBooking.getIsPayed(), foundBooking.getIsPayed());
+        Assertions.assertEquals(createdBooking.getTravel_package(), foundBooking.getTravel_package());
+    }
+
+    @Test
     public void testDeleteBooking() {
 
         //Given
@@ -59,7 +76,19 @@ public class BookingTest {
         assertTrue(createdBooking == null);
     }
 
+    public void clearMockBooking() {
+
+        Booking booking = new Booking(main_customer, date, isPayed, travel_package);
+        Booking foundBooking = bookingService.findBooking(createdBooking);
+
+        if(foundBooking != null) {
+            bookingService.deleteBooking(foundBooking);
+        }
+    }
+
+
     public Booking createAndGetBooking() {
+
         Booking booking = new Booking(main_customer, date, isPayed, travel_package);
         BookingService bookingService = new BookingService();
         bookingService.addBooking(booking);
