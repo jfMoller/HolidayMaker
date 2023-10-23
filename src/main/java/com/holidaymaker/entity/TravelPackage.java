@@ -1,5 +1,9 @@
 package com.holidaymaker.entity;
 
+import com.holidaymaker.utility.ConnectionProvider;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -13,6 +17,8 @@ public class TravelPackage {
     private int availableSpots;
     private String startDate;
     private String endDate;
+    private Connection connection;
+
 
     public TravelPackage(int price, int theme, String destination, int availableSpots, String startDate, String endDate) {
         this.price = price;
@@ -24,6 +30,7 @@ public class TravelPackage {
     }
 
     public TravelPackage(ResultSet resultSet) throws SQLException {
+        this.connection = ConnectionProvider.getConnection();
         this.id = resultSet.getInt("id");
         this.price = resultSet.getInt("total_price");
         this.theme = resultSet.getInt("theme");
@@ -90,16 +97,37 @@ public class TravelPackage {
         this.endDate = endDate;
     }
 
+    public String printThemeAsString(int id) throws SQLException {
+        String sql = "SELECT type from themes where id = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        String newValue = "";
+
+        if (resultSet.next()) {
+            newValue = resultSet.getString("type");
+        }
+        return newValue;
+    }
+
     @Override
     public String toString() {
-        return "TravelPackage{" +
-                "id=" + id +
-                ", price=" + price +
-                ", theme=" + theme +
-                ", destination='" + destination + '\'' +
-                ", availableSpots=" + availableSpots +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
+        try {
+            return "TravelPackage{" +
+                    "id=" + id +
+                    ", price=" + price +
+                    ", theme=" + printThemeAsString(theme) +
+                    ", destination='" + destination + '\'' +
+                    ", availableSpots=" + availableSpots +
+                    ", startDate=" + startDate +
+                    ", endDate=" + endDate +
+                    '}';
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
