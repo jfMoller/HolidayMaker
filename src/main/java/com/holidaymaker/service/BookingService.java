@@ -77,6 +77,39 @@ public class BookingService {
         return null;
     }
 
+    public Booking findBooking(int bookingId) throws SQLException {
+        String sql = "SELECT * FROM bookings WHERE id = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, bookingId);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return new Booking(resultSet);
+        }
+        return null;
+    }
+
+    public int findBookingId(Booking booking) throws SQLException {
+        Booking foundBooking = findBooking(booking);
+        return foundBooking.getId();
+    };
+
+    public void verifyPayment(int bookingId) throws SQLException {
+        String sql = "UPDATE bookings SET isPayed = true WHERE id = (?) ";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, bookingId);
+        statement.executeUpdate();
+    }
+
+    public Boolean getPayStatus(int bookingId) throws SQLException {
+        return findBooking(bookingId).getIsPayed();
+    };
+
     public void deleteBooking(Booking booking) throws SQLException {
         if (findBooking(booking) != null) {
             String sql = "DELETE FROM bookings " +

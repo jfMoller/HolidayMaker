@@ -111,24 +111,19 @@ public class BookingTest {
     }
 
     @Test
-    public void TestChangeIsPayed() throws SQLException {
+    public void TestVerifyIsPayed() throws SQLException {
 
         //Given
         Booking createdBooking = createAndGetBooking();
         BookingService bookingService = new BookingService();
 
         //When
-        bookingService.changePayStatus
-
-         String sql = "UPDATE bookings" + "SET isPayed = 'true'" + "WHERE id = 1;"
-
-
+        int bookingId = bookingService.findBookingId(createdBooking);
+        bookingService.verifyPayment(bookingId);
+        Boolean isPayed = bookingService.getPayStatus(bookingId);
 
         //Then
-        assertTrue(createdBooking.getIsPayed());
-
-
-
+        assertTrue(isPayed);
 
     }
 
