@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TravelPackageTest {
     private static int id;
     private static final int PRICE = 10000;
@@ -51,46 +53,42 @@ public class TravelPackageTest {
         id = lastTravelPackage.getId();
 
         //Then
-        Assertions.assertEquals(id, lastTravelPackage.getId());
-        Assertions.assertEquals(PRICE, lastTravelPackage.getPrice());
-        Assertions.assertEquals(THEME, lastTravelPackage.getTheme());
-        Assertions.assertEquals(DESTINATION, lastTravelPackage.getDestination());
-        Assertions.assertEquals(AVAILABLE_SPOTS, lastTravelPackage.getAvailableSpots());
-        Assertions.assertEquals(START_DATE, lastTravelPackage.getStartDate());
-        Assertions.assertEquals(END_DATE, lastTravelPackage.getEndDate());
+        assertEquals(id, lastTravelPackage.getId());
+        assertEquals(PRICE, lastTravelPackage.getPrice());
+        assertEquals(THEME, lastTravelPackage.getTheme());
+        assertEquals(DESTINATION, lastTravelPackage.getDestination());
+        assertEquals(AVAILABLE_SPOTS, lastTravelPackage.getAvailableSpots());
+        assertEquals(START_DATE, lastTravelPackage.getStartDate());
+        assertEquals(END_DATE, lastTravelPackage.getEndDate());
 
         deleteTravelPackageById(id);
     }
 
-    @Test
-    public void testTypeOfTheme() throws SQLException {
 
-        // Vi vill hämta hem alla travel-packages från databasen och kolla ifall dom har ett tema som stämmer överens med ett tema som finns i tema-tabellen
+    @Test
+    public void testConversionOfThemeToString() throws SQLException {
+
         //Given
         TravelPackageService travelPackageService = new TravelPackageService();
+        int sportThemeId = 1;
+        int cultureThemeId = 2;
+        int natureThemeId = 3;
 
         //When
-        List <TravelPackage> travelPackages = travelPackageService.getAllTravelPackages();
-        List<TravelPackage> themeInDatabase = travelPackages;
-
-        for(int i= 0; i < travelPackages.size(); i++) {
-            int value = travelPackages.get(i).getTheme();
-            boolean containsNumber = false;
-
-            for(TravelPackage travelPackage : themeInDatabase) {
-                if(travelPackage.getTheme().compareTo(value == 1) ) {
-                    containsNumber = true;
-                    break;
-                }
-            }
-            Assertions.assertEquals(containsNumber);
-    }
-
+        String sportTheme = travelPackageService.printThemeAsString(sportThemeId);
+        String cultureTheme = travelPackageService.printThemeAsString(cultureThemeId);
+        String natureTheme = travelPackageService.printThemeAsString(natureThemeId);
 
         //Then
-
+        assertEquals("Sport", sportTheme);
+        assertEquals("Culture", cultureTheme);
+        assertEquals("Nature", natureTheme);
 
     }
+
+
+
+
 
     public void deleteTravelPackageById(int index) throws SQLException {
         String sql = "DELETE FROM travel_packages WHERE id = (?)";

@@ -60,4 +60,23 @@ public class TravelPackageService {
         statement.executeUpdate();
 
     }
+
+    public String printThemeAsString(int id) throws SQLException {
+        String sql = "SELECT type FROM themes WHERE id = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        String newValue = "";
+
+        if (resultSet.next()) {
+            newValue = resultSet.getString("type");
+        }
+        return newValue;
+    }
+
+
 }

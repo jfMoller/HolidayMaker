@@ -1,5 +1,6 @@
 package com.holidaymaker.entity;
 
+import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 
 import java.sql.Connection;
@@ -18,6 +19,8 @@ public class TravelPackage {
     private String startDate;
     private String endDate;
     private Connection connection;
+
+    private TravelPackageService travelPackageService = new TravelPackageService();
 
 
     public TravelPackage(int price, int theme, String destination, int availableSpots, String startDate, String endDate) {
@@ -39,7 +42,6 @@ public class TravelPackage {
         this.startDate = resultSet.getString("start_date");
         this.endDate = resultSet.getString("end_date");
     }
-
 
     public int getId() {
         return id;
@@ -97,30 +99,13 @@ public class TravelPackage {
         this.endDate = endDate;
     }
 
-    public String printThemeAsString(int id) throws SQLException {
-        String sql = "SELECT type from themes where id = ?";
-
-        PreparedStatement statement = connection.prepareStatement(sql);
-
-        statement.setInt(1, id);
-
-        ResultSet resultSet = statement.executeQuery();
-
-        String newValue = "";
-
-        if (resultSet.next()) {
-            newValue = resultSet.getString("type");
-        }
-        return newValue;
-    }
-
     @Override
     public String toString() {
         try {
             return "TravelPackage{" +
                     "id=" + id +
                     ", price=" + price +
-                    ", theme=" + printThemeAsString(theme) +
+                    ", theme=" + travelPackageService.printThemeAsString(theme) +
                     ", destination='" + destination + '\'' +
                     ", availableSpots=" + availableSpots +
                     ", startDate=" + startDate +
