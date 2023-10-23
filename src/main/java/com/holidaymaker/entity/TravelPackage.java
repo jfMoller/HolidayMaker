@@ -4,10 +4,8 @@ import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class TravelPackage {
 
@@ -110,6 +108,7 @@ public class TravelPackage {
                     ", availableSpots=" + availableSpots +
                     ", startDate=" + startDate +
                     ", endDate=" + endDate +
+                    ", activities=" + travelPackageService.formatActivities(id) +
                     '}';
         } catch (SQLException e) {
             throw new RuntimeException(e);

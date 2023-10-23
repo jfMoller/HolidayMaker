@@ -1,6 +1,8 @@
 package com.holidaymaker.service;
 
+import com.holidaymaker.entity.ActivitiesList;
 import com.holidaymaker.entity.Activity;
+import com.holidaymaker.entity.ActivityListItem;
 import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.utility.ConnectionProvider;
 
@@ -76,6 +78,31 @@ public class TravelPackageService {
             newValue = resultSet.getString("type");
         }
         return newValue;
+    }
+
+    public ActivitiesList fetchActivities(int travelPackage) throws SQLException {
+        String sql = "SELECT * FROM activities WHERE travel_package = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, travelPackage);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        ActivitiesList activitiesList = new ActivitiesList();
+
+        while (resultSet.next()) {
+            String type = resultSet.getString("type");
+            double price = resultSet.getDouble("price");
+
+            activitiesList.addListItem(new ActivityListItem(type, price));
+        }
+        return activitiesList;
+    }
+
+    public String formatActivities(int travelPackage) throws SQLException {
+        ActivitiesList activitiesList = fetchActivities(travelPackage);
+        return activitiesList.toString();
     }
 
 

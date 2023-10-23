@@ -1,8 +1,8 @@
+import com.holidaymaker.entity.ActivitiesList;
 import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -94,7 +94,7 @@ public class TravelPackageTest {
 
     //write test to see activities
     @Test
-    public void seeActivitiesInTravelPackage() {
+    public void seeActivitiesInTravelPackage() throws SQLException {
         //Given
         TravelPackage travelPackage = new TravelPackage(PRICE, THEME, DESTINATION, AVAILABLE_SPOTS, START_DATE, END_DATE);
         TravelPackageService travelPackageService = new TravelPackageService();
@@ -105,14 +105,14 @@ public class TravelPackageTest {
         ActivitiesList activities = travelPackageService.fetchActivities(travelPackageId);
 
         //Then - check activities
-        assertEquals("Klättring", activities.getList.get(0).getDescription());
-        assertEquals("Fallskärmshoppning", activities.getList.get(1).getDescription());
-        assertEquals("Drakflygning", activities.getList.get(2).getDescription());
+        assertEquals("Drakflygning", activities.getActivities().get(0).type());
+        assertEquals("Klättring", activities.getActivities().get(1).type());
+        assertEquals("Fallskärmshoppning", activities.getActivities().get(2).type());
 
         //Then - check prices
-        assertEquals(1399, activities.getList.get(0).getPrice());
-        assertEquals(3999, activities.getList.get(1).getPrice());
-        assertEquals(3499, activities.getList.get(2).getPrice());
+        assertEquals(3499, activities.getActivities().get(0).price());
+        assertEquals(1399, activities.getActivities().get(1).price());
+        assertEquals(3999, activities.getActivities().get(2).price());
 
     }
 
