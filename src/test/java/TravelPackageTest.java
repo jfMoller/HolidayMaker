@@ -1,3 +1,5 @@
+import com.holidaymaker.entity.Theme;
+import com.holidaymaker.service.ThemeService;
 import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
@@ -10,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TravelPackageTest {
     private static int id;
@@ -68,22 +72,24 @@ public class TravelPackageTest {
         // Vi vill hämta hem alla travel-packages från databasen och kolla ifall dom har ett tema som stämmer överens med ett tema som finns i tema-tabellen
         //Given
         TravelPackageService travelPackageService = new TravelPackageService();
+        ThemeService themeService = new ThemeService();
 
         //When
         List <TravelPackage> travelPackages = travelPackageService.getAllTravelPackages();
-        List<TravelPackage> themeInDatabase = travelPackages;
+        // Hämta alla teman från tematabellen
+        List<Theme> themes = themeService.getAllThemes();
 
-        for(int i= 0; i < travelPackages.size(); i++) {
-            int value = travelPackages.get(i).getTheme();
-            boolean containsNumber = false;
 
-            for(TravelPackage travelPackage : themeInDatabase) {
-                if(travelPackage.getTheme().compareTo(value == 1) ) {
-                    containsNumber = true;
+        // Loopa igenom varje resepaket och kontrollera att dess tema finns i tematabellen
+        for (TravelPackage travelPackage : travelPackages) {
+            boolean themeFound = false;
+            for (Theme theme : themes) {
+                if (travelPackage.getTheme() == (theme.getId())) {
+                    themeFound = true;
                     break;
                 }
             }
-            Assertions.assertEquals(containsNumber);
+            assertTrue(themeFound, "Resepaketets tema hittades inte i tematabellen");
     }
 
 

@@ -98,7 +98,7 @@ public class TravelPackage {
     }
 
     public String printThemeAsString(int id) throws SQLException {
-        String sql = "SELECT type from themes where id = ?";
+        String sql = "SELECT type FROM themes WHERE id = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
 
