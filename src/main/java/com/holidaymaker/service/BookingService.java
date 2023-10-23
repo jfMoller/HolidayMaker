@@ -23,6 +23,19 @@ public class BookingService {
         this.scanner = new Scanner(System.in);
     }
 
+    public void showVerifyPayment() throws SQLException{
+        System.out.println("Enter booking Id to verify payment: ");
+        int bookingId = scanner.nextInt();
+        scanner.nextLine();
+        verifyPayment(bookingId);
+        if (getPayStatus(bookingId)) {
+            System.out.println("Payment confirmed for booking with ID: " + bookingId);
+        }  else {
+            System.out.println("Failed to confirm payment.");
+        }
+
+    };
+
     public void addBooking(Booking newBooking) throws SQLException {
         String sql = "INSERT INTO bookings (main_customer, date, isPayed, travel_package)" +
                 " VALUES (?, ?, ?, ?)";
