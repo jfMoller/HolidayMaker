@@ -13,9 +13,8 @@ import java.util.List;
 
 public class TravelPackageTest {
     private static int id;
-
     private static final int PRICE = 10000;
-    private static int theme = 1;
+    private static final int THEME = 1;
     private static final String DESTINATION = "Planet Mars";
     private static final int AVAILABLE_SPOTS = 12;
     private static final String START_DATE = "2023-12-01 00:00:00";
@@ -32,6 +31,12 @@ public class TravelPackageTest {
         ConnectionProvider.closeConnection();
     }
 
+    public void createTravelPackage() throws SQLException {
+        TravelPackageService travelPackageService = new TravelPackageService();
+        TravelPackage travelPackage = new TravelPackage(PRICE, THEME, DESTINATION, AVAILABLE_SPOTS, START_DATE, END_DATE);
+        travelPackageService.addTravelPackage(travelPackage);
+    }
+
 
     @Test
     public void isPackageSavedInDB() throws SQLException {
@@ -41,20 +46,50 @@ public class TravelPackageTest {
         createTravelPackage();
 
         //When
-        List<TravelPackage> travelPackages = travelPackageService.getTravelPackage();
+        List<TravelPackage> travelPackages = travelPackageService.getAllTravelPackages();
         TravelPackage lastTravelPackage = travelPackages.get(travelPackages.size() -1);
         id = lastTravelPackage.getId();
 
         //Then
         Assertions.assertEquals(id, lastTravelPackage.getId());
         Assertions.assertEquals(PRICE, lastTravelPackage.getPrice());
-        Assertions.assertEquals(theme, lastTravelPackage.getTheme());
+        Assertions.assertEquals(THEME, lastTravelPackage.getTheme());
         Assertions.assertEquals(DESTINATION, lastTravelPackage.getDestination());
         Assertions.assertEquals(AVAILABLE_SPOTS, lastTravelPackage.getAvailableSpots());
         Assertions.assertEquals(START_DATE, lastTravelPackage.getStartDate());
         Assertions.assertEquals(END_DATE, lastTravelPackage.getEndDate());
 
         deleteTravelPackageById(id);
+    }
+
+    @Test
+    public void testTypeOfTheme() throws SQLException {
+
+        // Vi vill hämta hem alla travel-packages från databasen och kolla ifall dom har ett tema som stämmer överens med ett tema som finns i tema-tabellen
+        //Given
+        TravelPackageService travelPackageService = new TravelPackageService();
+
+        //When
+        List <TravelPackage> travelPackages = travelPackageService.getAllTravelPackages();
+        List<TravelPackage> themeInDatabase = travelPackages;
+
+        for(int i= 0; i < travelPackages.size(); i++) {
+            int value = travelPackages.get(i).getTheme();
+            boolean containsNumber = false;
+
+            for(TravelPackage travelPackage : themeInDatabase) {
+                if(travelPackage.getTheme().compareTo(value == 1) ) {
+                    containsNumber = true;
+                    break;
+                }
+            }
+            Assertions.assertEquals(containsNumber);
+    }
+
+
+        //Then
+
+
     }
 
     public void deleteTravelPackageById(int index) throws SQLException {
@@ -67,10 +102,6 @@ public class TravelPackageTest {
         statement.executeUpdate();
     }
 
-    public void createTravelPackage() throws SQLException {
-        TravelPackageService travelPackageService = new TravelPackageService();
-        TravelPackage travelPackage = new TravelPackage(PRICE, theme, DESTINATION, AVAILABLE_SPOTS, START_DATE, END_DATE);
-        travelPackageService.addTravelPackage(travelPackage);
-    }
+
 
 }

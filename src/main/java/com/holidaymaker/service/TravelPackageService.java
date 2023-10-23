@@ -23,13 +23,13 @@ public class TravelPackageService {
     }
 
     public void viewTravelPackage() throws SQLException {
-        List<TravelPackage> travelPackages = getTravelPackage();
+        List<TravelPackage> travelPackages = getAllTravelPackages();
         for (TravelPackage travelPackage : travelPackages) {
             System.out.println(travelPackage);
         }
     }
 
-    public List<TravelPackage> getTravelPackage() throws SQLException {
+    public List<TravelPackage> getAllTravelPackages() throws SQLException {
         List<TravelPackage> travelPackageList = new ArrayList<>();
 
         String sql = "SELECT * FROM travel_packages";
