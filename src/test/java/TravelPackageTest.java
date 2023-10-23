@@ -86,6 +86,37 @@ public class TravelPackageTest {
 
     }
 
+    //Write test to see additionalservices
+    @Test
+    public void seeAdditionalServices() {
+
+    }
+
+    //write test to see activities
+    @Test
+    public void seeActivitiesInTravelPackage() {
+        //Given
+        TravelPackage travelPackage = new TravelPackage(PRICE, THEME, DESTINATION, AVAILABLE_SPOTS, START_DATE, END_DATE);
+        TravelPackageService travelPackageService = new TravelPackageService();
+        ActivitiesList activitiesList = new ActivitiesList();
+
+        //When
+        int travelPackageId = 1;
+        ActivitiesList activities = travelPackageService.fetchActivities(travelPackageId);
+
+        //Then - check activities
+        assertEquals("Klättring", activities.getList.get(0).getDescription());
+        assertEquals("Fallskärmshoppning", activities.getList.get(1).getDescription());
+        assertEquals("Drakflygning", activities.getList.get(2).getDescription());
+
+        //Then - check prices
+        assertEquals(1399, activities.getList.get(0).getPrice());
+        assertEquals(3999, activities.getList.get(1).getPrice());
+        assertEquals(3499, activities.getList.get(2).getPrice());
+
+    }
+
+    //write test to see accomodations
 
 
 
