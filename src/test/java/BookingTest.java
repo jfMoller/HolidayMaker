@@ -10,8 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BookingTest {
 
@@ -109,6 +108,28 @@ public class BookingTest {
                 assertEquals(createdBooking.getTravelPackage(), fetchBooking.getTravelPackage());
             }
         }
+    }
+
+    @Test
+    public void TestChangeIsPayed() throws SQLException {
+
+        //Given
+        Booking createdBooking = createAndGetBooking();
+        BookingService bookingService = new BookingService();
+
+        //When
+        bookingService.changePayStatus
+
+         String sql = "UPDATE bookings" + "SET isPayed = 'true'" + "WHERE id = 1;"
+
+
+
+        //Then
+        assertTrue(createdBooking.getIsPayed());
+
+
+
+
     }
 
     public void clearMockBooking() throws SQLException {
