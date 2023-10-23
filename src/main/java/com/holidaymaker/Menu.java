@@ -26,7 +26,8 @@ public class Menu {
             System.out.println("2. Add Customer");
             System.out.println("3. View Bookings");
             System.out.println("4. Verify Booking Payment");
-            System.out.println("5. Quit");
+            System.out.println("5. Cancel a Booking");
+            System.out.println("6. Quit");
             System.out.println("Enter your choice");
 
             int choice = scanner.nextInt();
@@ -37,7 +38,8 @@ public class Menu {
                 case 2 -> customerService.addMenuCustomer();
                 case 3 -> bookingService.viewBookings();
                 case 4 -> bookingService.showVerifyPayment();
-                case 5 -> {
+                case 5 -> bookingService.showDeleteBooking();
+                case 6 -> {
                     System.out.println("Shutting down...");
                     return;
                 }

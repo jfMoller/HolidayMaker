@@ -134,6 +134,34 @@ public class BookingService {
         }
     }
 
+    public void deleteBooking(int bookingId) throws SQLException {
+        if (findBooking(bookingId) != null) {
+            String sql = "DELETE FROM bookings " +
+                    "WHERE id = (?) ";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, bookingId);
+
+            statement.executeUpdate();
+        }
+    }
+
+    public void showDeleteBooking() throws SQLException{
+        System.out.println("Enter booking Id for the booking you want to cancel: ");
+        int bookingId = scanner.nextInt();
+        scanner.nextLine();
+        deleteBooking(bookingId);
+        if (findBooking(bookingId) == null) {
+            System.out.println("Booking with ID: " + bookingId + " has been canceled!");
+        }  else {
+            System.out.println("Failed to cancel booking.");
+        }
+
+    };
+
+
+
 
 
     public PreparedStatement setBookingStatement(Booking booking, String sql) throws SQLException {
