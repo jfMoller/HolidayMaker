@@ -1,5 +1,6 @@
 package com.holidaymaker.service;
 import com.holidaymaker.entity.Accommodation;
+import com.holidaymaker.entity.Booking;
 import com.holidaymaker.utility.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +34,42 @@ public class AccommodationService {
 
         return accommodationTypes;
     }
+
+    public void createAccommodation(Accommodation newAccommodation) throws SQLException{
+        String sql = "INSERT INTO accommodations (type, price, number_of_beds, travel_package) " +
+                "VALUES (?, ?, ?, ?) ";
+        PreparedStatement statement = setAccommodationStatement(newAccommodation, sql);
+
+        statement.executeUpdate();
+    }
+
+    public Accommodation findAccommodation(Accommodation accommodation) throws SQLException {
+        String sql = "SELECT * FROM accommodations " +
+                "WHERE type = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, accommodation.getType());
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return new Accommodation(resultSet);
+        }
+        return null;
+    }
+
+    public PreparedStatement setAccommodationStatement(Accommodation accommodation, String sql) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, accommodation.getType());
+        statement.setDouble(2, accommodation.getPrice());
+        statement.setInt(3, accommodation.getNumberOfBeds());
+        statement.setInt(4, accommodation.getTravelPackage());
+
+        return statement;
+    }
+
+
 
 
 }

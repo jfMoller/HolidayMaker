@@ -1,7 +1,9 @@
 import com.holidaymaker.entity.Accommodation;
 import com.holidaymaker.entity.ActivitiesList;
+import com.holidaymaker.entity.Booking;
 import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.service.AccommodationService;
+import com.holidaymaker.service.BookingService;
 import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
@@ -10,12 +12,12 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TravelPackageTest {
     private static int id;
@@ -25,6 +27,10 @@ public class TravelPackageTest {
     private static final int AVAILABLE_SPOTS = 12;
     private static final String START_DATE = "2023-12-01 00:00:00";
     private static final String END_DATE = "2024-01-05 00:00:30";
+    String ACCOMMODATION_TYPE = "Hotelssss";
+    double ACCOMMODATION_PRICE = 500;
+    int ACCOMMODATION_NUMBER_OF_BEDS = 150;
+    int ACCOMMODATION_TRAVELPACKAGE = 1;
 
 
     @BeforeEach
@@ -36,6 +42,8 @@ public class TravelPackageTest {
     public void disconnect() throws SQLException {
         ConnectionProvider.closeConnection();
     }
+
+
 
     public void createTravelPackage() throws SQLException {
         TravelPackageService travelPackageService = new TravelPackageService();
@@ -125,35 +133,86 @@ public class TravelPackageTest {
     @Test
     public void createAccommodationsInTravelPackage() throws SQLException {
 
-
         //Given
-        String TYPE = "Hotelssss";
-        double PRICE = 500;
-        int NUMBER_OF_BEDS = 150;
-        int TRAVELPACKAGE = 1;
-
         AccommodationService accommodationService = new AccommodationService();
-        Accommodation accommodation = accommodationService.createAccommodation(TYPE, PRICE, NUMBER_OF_BEDS, TRAVELPACKAGE);
-        Accommodation foundAccommodation = accommodationService.findAccommodation(TYPE, PRICE, NUMBER_OF_BEDS, TRAVELPACKAGE);
+        Accommodation accommodation = new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.createAccommodation(accommodation);
+        Accommodation foundAccommodation =  new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.findAccommodation(foundAccommodation);
 
         //When
-        Accommodation accommodation1 = accommodationService.createAccommodation(TYPE, PRICE, NUMBER_OF_BEDS, TRAVELPACKAGE);
-        Accommodation accommodation2 = accommodationService.createAccommodation(TYPE, PRICE, NUMBER_OF_BEDS + 2, TRAVELPACKAGE);
-        Accommodation accommodation3 = accommodationService.createAccommodation(TYPE, PRICE, NUMBER_OF_BEDS + 4, TRAVELPACKAGE);
+        Accommodation accommodation1 = new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.createAccommodation(accommodation1);
+        Accommodation accommodation2 = new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS + 2,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.createAccommodation(accommodation2);
+        Accommodation accommodation3 = new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS + 4,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.createAccommodation(accommodation3);
 
-        Accommodation foundAccommodation1 = accommodationService.findAccommodation(TYPE, PRICE, NUMBER_OF_BEDS, TRAVELPACKAGE);
-        Accommodation foundAccommodation2 = accommodationService.findAccommodation(TYPE, PRICE, NUMBER_OF_BEDS + 2, TRAVELPACKAGE);
-        Accommodation foundAccommodation3 = accommodationService.findAccommodation(TYPE, PRICE, NUMBER_OF_BEDS + 4, TRAVELPACKAGE);
+        Accommodation foundAccommodation1 = new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.findAccommodation(foundAccommodation1);
+        Accommodation foundAccommodation2 = new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS + 2,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.findAccommodation(foundAccommodation2);
+        Accommodation foundAccommodation3 = new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS + 4,
+                ACCOMMODATION_TRAVELPACKAGE);
+        accommodationService.findAccommodation(foundAccommodation3);
 
         //Then
         assertNotNull(foundAccommodation1);
         assertNotNull(foundAccommodation2);
         assertNotNull(foundAccommodation3);
 
-        assertEquals(TYPE, accommodation1.getType());
-        assertEquals(PRICE, accommodation2.getPrice());
-        assertEquals(NUMBER_OF_BEDS + 4, accommodation3.getNumberOfBeds());
+        assertEquals(ACCOMMODATION_TYPE, accommodation1.getType());
+        assertEquals(ACCOMMODATION_PRICE, accommodation2.getPrice());
+        assertEquals(ACCOMMODATION_NUMBER_OF_BEDS + 4, accommodation3.getNumberOfBeds());
+
+        deleteAccommodationByType(ACCOMMODATION_TYPE);
     }
+
+    /*@Test
+    public void testDeleteAccommodation() throws SQLException {
+
+        //Given
+        Accommodation createdAccommodation = createAndGetAccommodation();
+        AccommodationService accommodationService = new AccommodationService();
+
+        //When
+        accommodationService.deleteAccommodation(createdAccommodation);
+        Accommodation foundAccommodation = accommodationService.findAccommodation(createdAccommodation);
+
+        //Then
+        assertNull(foundAccommodation);
+    }*/
 
     public void deleteTravelPackageById(int index) throws SQLException {
         String sql = "DELETE FROM travel_packages WHERE id = (?)";
@@ -164,6 +223,17 @@ public class TravelPackageTest {
 
         statement.executeUpdate();
     }
+
+    public void deleteAccommodationByType(String type) throws SQLException {
+        String sql = "DELETE FROM accommodations WHERE type = (?)";
+
+        Connection connection = ConnectionProvider.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, type);
+
+        statement.executeUpdate();
+    }
+
 
 
 
