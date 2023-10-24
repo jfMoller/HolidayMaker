@@ -1,7 +1,7 @@
 package com.holidaymaker.service;
 
 import com.holidaymaker.entity.Booking;
-import com.holidaymaker.entity.Customer;
+import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.utility.ConnectionProvider;
 
 import java.sql.Connection;
@@ -23,18 +23,20 @@ public class BookingService {
         this.scanner = new Scanner(System.in);
     }
 
-    public void showVerifyPayment() throws SQLException{
+    public void showVerifyPayment() throws SQLException {
         System.out.println("Enter booking Id to verify payment: ");
         int bookingId = scanner.nextInt();
         scanner.nextLine();
         verifyPayment(bookingId);
         if (getPayStatus(bookingId)) {
             System.out.println("Payment confirmed for booking with ID: " + bookingId);
-        }  else {
+        } else {
             System.out.println("Failed to confirm payment.");
         }
 
-    };
+    }
+
+    ;
 
     public void addBooking(Booking newBooking) throws SQLException {
         String sql = "INSERT INTO bookings (main_customer, date, isPayed, travel_package)" +
@@ -108,7 +110,9 @@ public class BookingService {
     public int findBookingId(Booking booking) throws SQLException {
         Booking foundBooking = findBooking(booking);
         return foundBooking.getId();
-    };
+    }
+
+    ;
 
     public void verifyPayment(int bookingId) throws SQLException {
         String sql = "UPDATE bookings SET isPayed = true WHERE id = (?) ";
@@ -121,7 +125,9 @@ public class BookingService {
 
     public Boolean getPayStatus(int bookingId) throws SQLException {
         return findBooking(bookingId).getIsPayed();
-    };
+    }
+
+    ;
 
     public void deleteBooking(Booking booking) throws SQLException {
         if (findBooking(booking) != null) {
@@ -134,6 +140,40 @@ public class BookingService {
         }
     }
 
+    public String printCustomer(int mainCustomer) throws SQLException {
+        String sql = "SELECT * FROM customers WHERE id = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, mainCustomer);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (resultSet.next()) {
+            String name = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+            String personalNumber = resultSet.getString("personal_number");
+            String email = resultSet.getString("email");
+            stringBuilder.append("\n\t - " + name + ", personal number: " + personalNumber + ", email: " + email);
+        }
+        return stringBuilder.toString();
+    }
+
+    public String printTravelPackage(int travelPackage) throws SQLException {
+        String sql = "SELECT * FROM travel_packages WHERE id = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, travelPackage);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return new TravelPackage(resultSet).toString();
+        }
+        return null;
+    }
 
 
     public PreparedStatement setBookingStatement(Booking booking, String sql) throws SQLException {
