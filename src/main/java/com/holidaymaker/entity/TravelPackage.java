@@ -12,7 +12,7 @@ public class TravelPackage {
     private int id;
     private int price;
     private int theme;
-    private  String destination;
+    private String destination;
     private int availableSpots;
     private String startDate;
     private String endDate;
@@ -100,18 +100,22 @@ public class TravelPackage {
     @Override
     public String toString() {
         try {
-            return "TravelPackage{" +
-                    "id=" + id +
-                    ", price=" + price +
-                    ", theme=" + travelPackageService.printThemeAsString(theme) +
-                    ", destination='" + destination + '\'' +
-                    ", availableSpots=" + availableSpots +
-                    ", startDate=" + startDate +
-                    ", endDate=" + endDate +
-                    ", activities=" + travelPackageService.formatActivities(id) +
-                    ", accommodation=" + travelPackageService.formatAccommodations(id) +
-                    ", additional services=" + travelPackageService.formatAdditionalServices(id) +
-                    '}';
+            return String.format("-".repeat(30) +
+                            " Travel-package %s " + "-".repeat(30) + "\n" +
+                            "Theme: %s" + "\n" +
+                            "Destination: %s " + "\n" +
+                            "Activities: %s " + "\n" +
+                            "Accommodations: %s " + "\n" +
+                            "Additional services: %s " + "\n" +
+                            "Dates: %s - %s " + "\n" +
+                            "Available spots: %s " + "\n" +
+                            "Price: %d" + "\n"
+                    ,
+                    id, travelPackageService.printThemeAsString(theme), destination,
+                    travelPackageService.formatActivities(id),
+                    travelPackageService.formatAccommodations(id),
+                    travelPackageService.formatAdditionalServices(id),
+                    startDate, endDate, availableSpots, price);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

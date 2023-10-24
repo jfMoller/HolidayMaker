@@ -21,7 +21,7 @@ public class AccommodationsList {
     public String buildList() {
         StringBuilder stringBuilder = new StringBuilder();
         for (AccommodationListItem item : accommodations) {
-            stringBuilder.append("type: " + item.type() + ", price: " + item.price() + ", Number of beds: " + item.numberOfBeds() + "\n");
+            stringBuilder.append("\n\t - " + item.type() + ", Number of beds: " + item.numberOfBeds() + ", price: " + item.price());
         }
         return stringBuilder.toString();
     }

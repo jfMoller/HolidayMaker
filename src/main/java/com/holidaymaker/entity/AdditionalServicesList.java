@@ -21,7 +21,7 @@ public class AdditionalServicesList {
     public String buildList() {
         StringBuilder stringBuilder = new StringBuilder();
         for (AdditionalServiceListItem item : additionalServices) {
-            stringBuilder.append("price: " + item.price() + ", description: " + item.description() + "\n");
+            stringBuilder.append("\n\t - " + item.description() + ", price: " + item.price());
         }
         return stringBuilder.toString();
     }

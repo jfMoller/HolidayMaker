@@ -21,7 +21,7 @@ public class ActivitiesList {
     public String buildList() {
         StringBuilder stringBuilder = new StringBuilder();
         for (ActivityListItem item : activities) {
-            stringBuilder.append("type: " + item.type() + ", price: " + item.price() + "\n");
+            stringBuilder.append("\n\t - " + item.type() + ", price: " + item.price());
         }
         return stringBuilder.toString();
     }
