@@ -1,5 +1,8 @@
 import com.holidaymaker.entity.Accommodation;
+import com.holidaymaker.entity.ActivitiesList;
+import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.service.AccommodationService;
+import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -9,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AccommodationsTest {
 
@@ -67,6 +72,5 @@ public class AccommodationsTest {
         }
 
     }
-
 }
 

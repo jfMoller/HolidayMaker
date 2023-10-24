@@ -34,5 +34,65 @@ public class AccommodationService {
         return accommodationTypes;
     }
 
+    public void createAccommodation(Accommodation newAccommodation) throws SQLException{
+        String sql = "INSERT INTO accommodations (type, price, number_of_beds, travel_package) " +
+                "VALUES (?, ?, ?, ?) ";
+        PreparedStatement statement = setAccommodationStatement(newAccommodation, sql);
+
+        statement.executeUpdate();
+    }
+
+    public Accommodation findAccommodation(Accommodation accommodation) throws SQLException {
+        String sql = "SELECT * FROM accommodations " +
+                "WHERE type = (?) AND price = (?) AND number_of_beds = (?) AND travel_package = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, accommodation.getType());
+        statement.setDouble(2, accommodation.getPrice());
+        statement.setInt(3, accommodation.getNumberOfBeds());
+        statement.setInt(4, accommodation.getTravelPackage());
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return new Accommodation(resultSet);
+        }
+        return null;
+    }
+
+    public Accommodation findAccommodationById(int id) throws SQLException {
+        String sql = "SELECT * FROM accommodations " +
+                "WHERE id = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return new Accommodation(resultSet);
+        }
+        return null;
+    }
+
+    public int getAccommodationId(Accommodation accommodation) throws SQLException {
+        return findAccommodation(accommodation).getId();
+    }
+
+    public PreparedStatement setAccommodationStatement(Accommodation accommodation, String sql) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, accommodation.getType());
+        statement.setDouble(2, accommodation.getPrice());
+        statement.setInt(3, accommodation.getNumberOfBeds());
+        statement.setInt(4, accommodation.getTravelPackage());
+
+        return statement;
+    }
+
+
+
+
+
 
 }

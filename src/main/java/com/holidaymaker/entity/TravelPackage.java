@@ -1,18 +1,25 @@
 package com.holidaymaker.entity;
 
+import com.holidaymaker.service.TravelPackageService;
+import com.holidaymaker.utility.ConnectionProvider;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class TravelPackage {
 
     private int id;
     private int price;
     private int theme;
-    private  String destination;
+    private String destination;
     private int availableSpots;
     private String startDate;
     private String endDate;
+    private Connection connection;
+
+    private TravelPackageService travelPackageService = new TravelPackageService();
+
 
     public TravelPackage(int price, int theme, String destination, int availableSpots, String startDate, String endDate) {
         this.price = price;
@@ -24,6 +31,7 @@ public class TravelPackage {
     }
 
     public TravelPackage(ResultSet resultSet) throws SQLException {
+        this.connection = ConnectionProvider.getConnection();
         this.id = resultSet.getInt("id");
         this.price = resultSet.getInt("total_price");
         this.theme = resultSet.getInt("theme");
@@ -32,7 +40,6 @@ public class TravelPackage {
         this.startDate = resultSet.getString("start_date");
         this.endDate = resultSet.getString("end_date");
     }
-
 
     public int getId() {
         return id;
@@ -92,14 +99,25 @@ public class TravelPackage {
 
     @Override
     public String toString() {
-        return "TravelPackage{" +
-                "id=" + id +
-                ", price=" + price +
-                ", theme=" + theme +
-                ", destination='" + destination + '\'' +
-                ", availableSpots=" + availableSpots +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
+        try {
+            return String.format("-".repeat(30) +
+                            " Travel-package %s " + "-".repeat(30) + "\n" +
+                            "Theme: %s" + "\n" +
+                            "Destination: %s " + "\n" +
+                            "Activities: %s " + "\n" +
+                            "Accommodations: %s " + "\n" +
+                            "Additional services: %s " + "\n" +
+                            "Dates: %s - %s " + "\n" +
+                            "Available spots: %s " + "\n" +
+                            "Price: %d" + "\n"
+                    ,
+                    id, travelPackageService.printThemeAsString(theme), destination,
+                    travelPackageService.formatActivities(id),
+                    travelPackageService.formatAccommodations(id),
+                    travelPackageService.formatAdditionalServices(id),
+                    startDate, endDate, availableSpots, price);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
