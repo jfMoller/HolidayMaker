@@ -1,9 +1,7 @@
 import com.holidaymaker.entity.Accommodation;
 import com.holidaymaker.entity.ActivitiesList;
-import com.holidaymaker.entity.Booking;
 import com.holidaymaker.entity.TravelPackage;
 import com.holidaymaker.service.AccommodationService;
-import com.holidaymaker.service.BookingService;
 import com.holidaymaker.service.TravelPackageService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
@@ -12,9 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -136,34 +132,18 @@ public class TravelPackageTest {
         //Given
         AccommodationService accommodationService = new AccommodationService();
         Accommodation accommodation = createMockAccommodation(0);
-        accommodationService.createAccommodation(accommodation);
-        Accommodation foundAccommodation = accommodationService.findAccommodation(accommodation);
 
         //When
-        Accommodation accommodation1 = createMockAccommodation(0);
-        accommodationService.createAccommodation(accommodation1);
+        accommodationService.createAccommodation(accommodation);
+        int accommodationId = accommodationService.getAccommodationId(accommodation);
 
-        Accommodation accommodation2 = createMockAccommodation(2);
-        accommodationService.createAccommodation(accommodation2);
-
-        Accommodation accommodation3 = createMockAccommodation(4);
-        accommodationService.createAccommodation(accommodation3);
-
-
-        Accommodation foundAccommodation1 = accommodationService.findAccommodation(accommodation1);
-
-        Accommodation foundAccommodation2 = accommodationService.findAccommodation(accommodation2);
-
-        Accommodation foundAccommodation3 = accommodationService.findAccommodation(accommodation3);
+        Accommodation foundAccommodation = accommodationService.findAccommodationById(accommodationId);
 
         //Then
-        assertNotNull(foundAccommodation1);
-        assertNotNull(foundAccommodation2);
-        assertNotNull(foundAccommodation3);
-
-        assertEquals(ACCOMMODATION_TYPE, accommodation1.getType());
-        assertEquals(ACCOMMODATION_PRICE, accommodation2.getPrice());
-        assertEquals(ACCOMMODATION_NUMBER_OF_BEDS + 4, accommodation3.getNumberOfBeds());
+        assertNotNull(foundAccommodation);
+        assertEquals(ACCOMMODATION_TYPE, accommodation.getType());
+        assertEquals(ACCOMMODATION_NUMBER_OF_BEDS, accommodation.getNumberOfBeds());
+        assertEquals(ACCOMMODATION_PRICE, accommodation.getPrice());
 
         deleteAccommodationByType(ACCOMMODATION_TYPE);
     }
@@ -176,9 +156,6 @@ public class TravelPackageTest {
     }
 
 
-    public AdditionalService createMockAdditionalServices() {
-
-    }
     public Accommodation createMockAccommodation(int extraBeds) {
 
         return new Accommodation(

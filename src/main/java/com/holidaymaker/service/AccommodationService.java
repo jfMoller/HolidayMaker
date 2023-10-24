@@ -1,6 +1,5 @@
 package com.holidaymaker.service;
 import com.holidaymaker.entity.Accommodation;
-import com.holidaymaker.entity.Booking;
 import com.holidaymaker.utility.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,10 +44,13 @@ public class AccommodationService {
 
     public Accommodation findAccommodation(Accommodation accommodation) throws SQLException {
         String sql = "SELECT * FROM accommodations " +
-                "WHERE type = (?)";
+                "WHERE type = (?) AND price = (?) AND number_of_beds = (?) AND travel_package = (?)";
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, accommodation.getType());
+        statement.setDouble(2, accommodation.getPrice());
+        statement.setInt(3, accommodation.getNumberOfBeds());
+        statement.setInt(4, accommodation.getTravelPackage());
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -56,6 +58,25 @@ public class AccommodationService {
             return new Accommodation(resultSet);
         }
         return null;
+    }
+
+    public Accommodation findAccommodationById(int id) throws SQLException {
+        String sql = "SELECT * FROM accommodations " +
+                "WHERE id = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return new Accommodation(resultSet);
+        }
+        return null;
+    }
+
+    public int getAccommodationId(Accommodation accommodation) throws SQLException {
+        return findAccommodation(accommodation).getId();
     }
 
     public PreparedStatement setAccommodationStatement(Accommodation accommodation, String sql) throws SQLException {
