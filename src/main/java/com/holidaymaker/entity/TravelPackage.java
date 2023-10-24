@@ -109,6 +109,8 @@ public class TravelPackage {
                     ", startDate=" + startDate +
                     ", endDate=" + endDate +
                     ", activities=" + travelPackageService.formatActivities(id) +
+                    ", accommodation=" + travelPackageService.formatAccommodations(id) +
+                    ", additional services=" + travelPackageService.formatAdditionalServices(id) +
                     '}';
         } catch (SQLException e) {
             throw new RuntimeException(e);

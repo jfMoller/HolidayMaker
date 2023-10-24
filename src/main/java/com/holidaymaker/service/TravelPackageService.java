@@ -1,9 +1,6 @@
 package com.holidaymaker.service;
 
-import com.holidaymaker.entity.ActivitiesList;
-import com.holidaymaker.entity.Activity;
-import com.holidaymaker.entity.ActivityListItem;
-import com.holidaymaker.entity.TravelPackage;
+import com.holidaymaker.entity.*;
 import com.holidaymaker.utility.ConnectionProvider;
 
 import java.sql.Connection;
@@ -100,9 +97,59 @@ public class TravelPackageService {
         return activitiesList;
     }
 
+    public AccommodationsList fetchAccommodations(int travelPackage) throws SQLException {
+        String sql = "SELECT * FROM accommodations WHERE travel_package = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, travelPackage);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        AccommodationsList accommodationsList = new AccommodationsList();
+
+        while (resultSet.next()) {
+            String type = resultSet.getString("type");
+            double price = resultSet.getDouble("price");
+            int numberOfBeds = resultSet.getInt("number_of_beds");
+
+            accommodationsList.addListItem(new AccommodationListItem(type, price, numberOfBeds));
+        }
+        return accommodationsList;
+    }
+
+    public AdditionalServicesList fetchAdditionalServices(int travelPackage) throws SQLException {
+        String sql = "SELECT * FROM additional_services WHERE travel_package = (?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, travelPackage);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        AdditionalServicesList additionalServices = new AdditionalServicesList();
+
+        while (resultSet.next()) {
+            double price = resultSet.getDouble("price");
+            String description = resultSet.getString("description");
+
+            additionalServices.addListItem(new AdditionalServiceListItem(price, description));
+        }
+        return additionalServices;
+    }
+
+    public String formatAdditionalServices(int travelPackage) throws SQLException {
+        AdditionalServicesList additionalServices = fetchAdditionalServices(travelPackage);
+        return additionalServices.toString();
+    }
+    public String formatAccommodations(int travelPackage) throws SQLException {
+        AccommodationsList accommodations = fetchAccommodations(travelPackage);
+        return accommodations.toString();
+    }
+
     public String formatActivities(int travelPackage) throws SQLException {
-        ActivitiesList activitiesList = fetchActivities(travelPackage);
-        return activitiesList.toString();
+        ActivitiesList activities = fetchActivities(travelPackage);
+        return activities.toString();
     }
 
 

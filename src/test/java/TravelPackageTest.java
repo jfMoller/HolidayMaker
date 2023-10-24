@@ -135,57 +135,26 @@ public class TravelPackageTest {
 
         //Given
         AccommodationService accommodationService = new AccommodationService();
-        Accommodation accommodation = new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS,
-                ACCOMMODATION_TRAVELPACKAGE);
+        Accommodation accommodation = createMockAccommodation(0);
         accommodationService.createAccommodation(accommodation);
-        Accommodation foundAccommodation =  new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS,
-                ACCOMMODATION_TRAVELPACKAGE);
-        accommodationService.findAccommodation(foundAccommodation);
+        Accommodation foundAccommodation = accommodationService.findAccommodation(accommodation);
 
         //When
-        Accommodation accommodation1 = new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS,
-                ACCOMMODATION_TRAVELPACKAGE);
+        Accommodation accommodation1 = createMockAccommodation(0);
         accommodationService.createAccommodation(accommodation1);
-        Accommodation accommodation2 = new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS + 2,
-                ACCOMMODATION_TRAVELPACKAGE);
+
+        Accommodation accommodation2 = createMockAccommodation(2);
         accommodationService.createAccommodation(accommodation2);
-        Accommodation accommodation3 = new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS + 4,
-                ACCOMMODATION_TRAVELPACKAGE);
+
+        Accommodation accommodation3 = createMockAccommodation(4);
         accommodationService.createAccommodation(accommodation3);
 
-        Accommodation foundAccommodation1 = new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS,
-                ACCOMMODATION_TRAVELPACKAGE);
-        accommodationService.findAccommodation(foundAccommodation1);
-        Accommodation foundAccommodation2 = new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS + 2,
-                ACCOMMODATION_TRAVELPACKAGE);
-        accommodationService.findAccommodation(foundAccommodation2);
-        Accommodation foundAccommodation3 = new Accommodation(
-                ACCOMMODATION_TYPE,
-                ACCOMMODATION_PRICE,
-                ACCOMMODATION_NUMBER_OF_BEDS + 4,
-                ACCOMMODATION_TRAVELPACKAGE);
-        accommodationService.findAccommodation(foundAccommodation3);
+
+        Accommodation foundAccommodation1 = accommodationService.findAccommodation(accommodation1);
+
+        Accommodation foundAccommodation2 = accommodationService.findAccommodation(accommodation2);
+
+        Accommodation foundAccommodation3 = accommodationService.findAccommodation(accommodation3);
 
         //Then
         assertNotNull(foundAccommodation1);
@@ -199,20 +168,26 @@ public class TravelPackageTest {
         deleteAccommodationByType(ACCOMMODATION_TYPE);
     }
 
-    /*@Test
-    public void testDeleteAccommodation() throws SQLException {
-
+    @Test
+    public void createAdditionalServices() {
         //Given
-        Accommodation createdAccommodation = createAndGetAccommodation();
-        AccommodationService accommodationService = new AccommodationService();
-
         //When
-        accommodationService.deleteAccommodation(createdAccommodation);
-        Accommodation foundAccommodation = accommodationService.findAccommodation(createdAccommodation);
-
         //Then
-        assertNull(foundAccommodation);
-    }*/
+    }
+
+
+    public AdditionalService createMockAdditionalServices() {
+
+    }
+    public Accommodation createMockAccommodation(int extraBeds) {
+
+        return new Accommodation(
+                ACCOMMODATION_TYPE,
+                ACCOMMODATION_PRICE,
+                ACCOMMODATION_NUMBER_OF_BEDS + extraBeds,
+                ACCOMMODATION_TRAVELPACKAGE);
+
+    }
 
     public void deleteTravelPackageById(int index) throws SQLException {
         String sql = "DELETE FROM travel_packages WHERE id = (?)";
