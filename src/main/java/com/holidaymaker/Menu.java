@@ -28,9 +28,10 @@ public class Menu {
             System.out.println("1. View customers:");
             System.out.println("2. Add customer");
             System.out.println("3. View travel packages");
-            System.out.println("4. View Bookings");
-            System.out.println("5. Verify Booking Payment");
-            System.out.println("6. Quit");
+            System.out.println("4. Make booking");
+            System.out.println("5. View Bookings");
+            System.out.println("6. Verify Booking Payment");
+            System.out.println("7. Quit");
             System.out.println("Enter your choice");
 
             int choice = scanner.nextInt();
@@ -40,9 +41,10 @@ public class Menu {
                 case 1 -> customerService.viewCustomers();
                 case 2 -> customerService.addMenuCustomer();
                 case 3 -> travelPackageService.viewTravelPackage();
-                case 4 -> bookingService.viewBookings();
-                case 5 -> bookingService.showVerifyPayment();
-                case 6 -> {
+                case 4 -> bookingService.viewMakeBooking();
+                case 5 -> bookingService.viewBookings();
+                case 6 -> bookingService.showVerifyPayment();
+                case 7 -> {
                     System.out.println("Shutting down...");
                     return;
                 }

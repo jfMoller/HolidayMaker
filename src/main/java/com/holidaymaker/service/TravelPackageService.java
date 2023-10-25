@@ -138,6 +138,14 @@ public class TravelPackageService {
         return additionalServices;
     }
 
+    public double calculateTotalAdditionalPrice(int travelPackage) throws SQLException {
+        ActivitiesList activitiesList = fetchActivities(travelPackage);
+        AccommodationsList accommodationsList = fetchAccommodations(travelPackage);
+        AdditionalServicesList additionalServicesList = fetchAdditionalServices(travelPackage);
+
+        return activitiesList.getTotalPrice() + accommodationsList.getTotalPrice() + additionalServicesList.getTotalPrice();
+    }
+
     public String formatAdditionalServices(int travelPackage) throws SQLException {
         AdditionalServicesList additionalServices = fetchAdditionalServices(travelPackage);
         return additionalServices.toString();

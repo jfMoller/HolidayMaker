@@ -109,13 +109,13 @@ public class TravelPackage {
                             "Additional services: %s " + "\n" +
                             "Dates: %s - %s " + "\n" +
                             "Available spots: %s " + "\n" +
-                            "Price: %d" + "\n"
+                            "Total price: %.2f" + "\n"
                     ,
                     id, travelPackageService.printThemeAsString(theme), destination,
                     travelPackageService.formatActivities(id),
                     travelPackageService.formatAccommodations(id),
                     travelPackageService.formatAdditionalServices(id),
-                    startDate, endDate, availableSpots, price);
+                    startDate, endDate, availableSpots, price + travelPackageService.calculateTotalAdditionalPrice(id));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

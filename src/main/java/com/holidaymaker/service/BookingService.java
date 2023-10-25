@@ -8,7 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,7 +40,37 @@ public class BookingService {
 
     }
 
-    ;
+    public void viewMakeBooking() throws SQLException {
+        System.out.println("Please enter customer id: ");
+        int customer = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Please enter the travel package number");
+        int travelPackage = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean isSuccessful = makeBooking(customer, travelPackage);
+
+        if(isSuccessful) {
+            System.out.println("You have successfully added a new booking to our system.");
+        } else {
+            System.out.println("Booking has not been added to our system. Please try again.");
+        }
+
+    }
+
+    public boolean makeBooking(int customer, int travelPackage) throws SQLException {
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = now.format(formatter);
+
+        Booking booking = new Booking(customer, formattedDateTime, false, travelPackage);
+        addBooking(booking);
+        if (findBooking(booking) != null) {
+            return true;
+        }
+        return false;
+    }
 
     public void addBooking(Booking newBooking) throws SQLException {
         String sql = "INSERT INTO bookings (main_customer, date, isPayed, travel_package)" +
@@ -112,8 +146,6 @@ public class BookingService {
         return foundBooking.getId();
     }
 
-    ;
-
     public void verifyPayment(int bookingId) throws SQLException {
         String sql = "UPDATE bookings SET isPayed = true WHERE id = (?) ";
 
@@ -126,8 +158,6 @@ public class BookingService {
     public Boolean getPayStatus(int bookingId) throws SQLException {
         return findBooking(bookingId).getIsPayed();
     }
-
-    ;
 
     public void deleteBooking(Booking booking) throws SQLException {
         if (findBooking(booking) != null) {
@@ -174,7 +204,6 @@ public class BookingService {
         }
         return null;
     }
-
 
     public PreparedStatement setBookingStatement(Booking booking, String sql) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
