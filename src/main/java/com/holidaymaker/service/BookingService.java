@@ -66,10 +66,30 @@ public class BookingService {
 
         Booking booking = new Booking(customer, formattedDateTime, false, travelPackage);
         addBooking(booking);
-        if (findBooking(booking) != null) {
+        Booking newBooking = findBooking(booking);
+        if (newBooking != null) {
+            subtractAvailableSpotsFromTravelPackage(newBooking.getTravelPackage());
             return true;
         }
         return false;
+    }
+
+    public void subtractAvailableSpotsFromTravelPackage(int travelPackage) throws SQLException {
+        String sql = "UPDATE travel_packages SET available_spots = available_spots - 1 WHERE id = (?) ";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, travelPackage);
+        statement.executeUpdate();
+    }
+
+    public void addAvailableSpotFromTravelPackage(int travelPackage) throws SQLException {
+        String sql = "UPDATE travel_packages SET available_spots = available_spots + 1 WHERE id = (?) ";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, travelPackage);
+        statement.executeUpdate();
     }
 
     public void addBooking(Booking newBooking) throws SQLException {
@@ -171,7 +191,8 @@ public class BookingService {
     }
 
     public void deleteBooking(int bookingId) throws SQLException {
-        if (findBooking(bookingId) != null) {
+        Booking selectedBooking = findBooking(bookingId);
+        if (selectedBooking != null) {
             String sql = "DELETE FROM bookings " +
                     "WHERE id = (?) ";
 
@@ -180,6 +201,8 @@ public class BookingService {
             statement.setInt(1, bookingId);
 
             statement.executeUpdate();
+
+            addAvailableSpotFromTravelPackage(selectedBooking.getTravelPackage());
         }
     }
 
