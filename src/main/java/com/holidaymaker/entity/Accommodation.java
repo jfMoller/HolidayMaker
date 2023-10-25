@@ -24,6 +24,13 @@ public class Accommodation {
         this.type = resultSet.getString("type");
     }
 
+    public Accommodation(String type, double price, int numberOfBeds, int travelPackage) {
+        this.type = type;
+        this.price = price;
+        this.numberOfBeds = numberOfBeds;
+        this.travelPackage = travelPackage;
+    }
+
 
     public int getId() {
         return id;

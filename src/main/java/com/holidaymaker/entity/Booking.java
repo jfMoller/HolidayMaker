@@ -1,5 +1,7 @@
 package com.holidaymaker.entity;
 
+import com.holidaymaker.service.BookingService;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,6 +12,8 @@ public class Booking {
     private String date;
     private boolean isPayed;
     private int travelPackage;
+
+    private BookingService bookingService = new BookingService();
 
     public Booking(int mainCustomer, String date, boolean isPayed, int travelPackage) {
         this.mainCustomer = mainCustomer;
@@ -48,12 +52,19 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" +
-                "id=" + id +
-                ", mainCustomer=" + mainCustomer +
-                ", date='" + date + '\'' +
-                ", isPayed=" + isPayed +
-                ", travelPackage=" + travelPackage +
-                '}';
+        try {
+            return String.format("-".repeat(30) +
+                            " Booking %s " + "-".repeat(30) + "\n" +
+                            "Main customer: %s" + "\n" +
+                            "Date: %s " + "\n" +
+                            "Payment verified: %s " + "\n" +
+                            "%s"
+                    ,
+                    id, bookingService.printCustomer(mainCustomer), date,
+                    isPayed,
+                    bookingService.printTravelPackage(travelPackage));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
