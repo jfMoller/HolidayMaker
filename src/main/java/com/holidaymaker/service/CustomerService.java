@@ -24,9 +24,18 @@ public class CustomerService {
 
     public void viewCustomers() throws SQLException {
         List<Customer> customers = getCustomers();
+
+        System.out.println("+------+-----------------+-----------------+-----------------+-----------------+---------------------------+-----------------+");
+        System.out.println("| ID   | First Name      | Last Name       | Phone Number    | Personal Number | Email                     | Passport Number |");
+        System.out.println("+------+-----------------+-----------------+-----------------+-----------------+---------------------------+-----------------+");
+
         for (Customer customer : customers) {
+            System.out.println();
             System.out.println(customer);
+            System.out.println("+------+-----------------+-----------------+-----------------+-----------------+---------------------------+-----------------+");
         }
+
+
     }
 
     public List<Customer> getCustomers() throws SQLException {
