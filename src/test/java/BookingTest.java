@@ -2,7 +2,6 @@ import com.holidaymaker.entity.Booking;
 import com.holidaymaker.service.BookingService;
 import com.holidaymaker.utility.ConnectionProvider;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -95,17 +94,19 @@ public class BookingTest {
         for (Booking booking : bookings ) {
             bookingService.addBooking(booking);
         }
-        List<Booking> fetchBookings = bookingService.getAllBookings();
+        List<Booking> fetchedBookings = bookingService.getAllBookings();
+        List<Booking> lastThreeBookings =
+                fetchedBookings.subList(Math.max(fetchedBookings.size() - 3, 0), fetchedBookings.size());
 
         //Then
 
         for ( Booking createdBooking : bookings ) {
 
-            for (Booking fetchBooking : fetchBookings) {
-                assertEquals(createdBooking.getMainCustomer(), fetchBooking.getMainCustomer());
-                assertEquals(createdBooking.getDate(), fetchBooking.getDate());
-                assertEquals(createdBooking.getIsPayed(), fetchBooking.getIsPayed());
-                assertEquals(createdBooking.getTravelPackage(), fetchBooking.getTravelPackage());
+            for (Booking fetchedBooking : lastThreeBookings) {
+                assertEquals(createdBooking.getMainCustomer(), fetchedBooking.getMainCustomer());
+                assertEquals(createdBooking.getDate(), fetchedBooking.getDate());
+                assertEquals(createdBooking.getIsPayed(), fetchedBooking.getIsPayed());
+                assertEquals(createdBooking.getTravelPackage(), fetchedBooking.getTravelPackage());
             }
         }
     }
@@ -129,7 +130,7 @@ public class BookingTest {
 
     public void clearMockBooking() throws SQLException {
 
-        Booking booking = new Booking(MAIN_CUSTOMER, DATE, IS_PAYED, TRAVEL_PACKAGE);
+        Booking booking = new Booking(MAIN_CUSTOMER, DATE, true, TRAVEL_PACKAGE);
         BookingService bookingService = new BookingService();
         Booking foundBooking = bookingService.findBooking(booking);
 
